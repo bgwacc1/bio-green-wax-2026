@@ -660,7 +660,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("INSERT INTO hero_slides (id, title, subtitle, cta_text, cta_link, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO hero_slides (id, title, subtitle, cta_text, cta_link, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['title'] ?? '', $input['subtitle'] ?? null, $input['cta_text'] ?? null, $input['cta_link'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM hero_slides WHERE id = ?");
@@ -684,7 +684,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("UPDATE hero_slides SET title=?, subtitle=?, cta_text=?, cta_link=?, image_url=?, display_order=?, is_active=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE hero_slides SET title=?, subtitle=?, cta_text=?, cta_link=?, image_url=?, display_order=?, is_active=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['title'] ?? '', $input['subtitle'] ?? null, $input['cta_text'] ?? null, $input['cta_link'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM hero_slides WHERE id = ?");
@@ -779,7 +779,7 @@ switch (true) {
                 $imageUrl = saveBase64ImageToFile($imageUrl, 'products', $id);
             }
 
-            $stmt = $conn->prepare("INSERT INTO products (id, slug, name, description, full_description, category, category_label, categories, image_url, specifications, applications, packaging, is_active, is_featured, display_order, priority_order, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+            $stmt = $conn->prepare("INSERT INTO products (id, slug, name, description, full_description, category, category_label, categories, image_url, specifications, applications, packaging, is_active, is_featured, display_order, priority_order, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
             $stmt->execute([$id, $input['slug'] ?? '', $input['name'] ?? '', $input['description'] ?? null, $input['full_description'] ?? null, $input['category'] ?? null, $input['category_label'] ?? null, json_encode($input['categories'] ?? []), $imageUrl, json_encode($input['specifications'] ?? []), json_encode($input['applications'] ?? []), json_encode($input['packaging'] ?? []), $isActive, $isFeatured, $input['display_order'] ?? 0, $input['priority_order'] ?? 10]);
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), 'products_slug_key') !== false) {
@@ -820,7 +820,7 @@ switch (true) {
                 $imageUrl = $row ? $row['image_url'] : null;
             }
 
-            $stmt = $conn->prepare("UPDATE products SET slug=?, name=?, description=?, full_description=?, category=?, category_label=?, categories=?, image_url=?, specifications=?, applications=?, packaging=?, is_active=?, is_featured=?, display_order=?, priority_order=?, synchronized_data=FALSE WHERE id=?");
+            $stmt = $conn->prepare("UPDATE products SET slug=?, name=?, description=?, full_description=?, category=?, category_label=?, categories=?, image_url=?, specifications=?, applications=?, packaging=?, is_active=?, is_featured=?, display_order=?, priority_order=?, synchronized_data=0 WHERE id=?");
             $stmt->execute([$input['slug'] ?? '', $input['name'] ?? '', $input['description'] ?? null, $input['full_description'] ?? null, $input['category'] ?? null, $input['category_label'] ?? null, json_encode($input['categories'] ?? []), $imageUrl, json_encode($input['specifications'] ?? []), json_encode($input['applications'] ?? []), json_encode($input['packaging'] ?? []), $isActive, $isFeatured, $input['display_order'] ?? 0, $input['priority_order'] ?? 10, $m[1]]);
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), 'products_slug_key') !== false) {
@@ -866,7 +866,7 @@ switch (true) {
         $id = generateUUID();
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("INSERT INTO product_categories (id, slug, name, description, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO product_categories (id, slug, name, description, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['slug'] ?? '', $input['name'] ?? '', $input['description'] ?? null, $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM product_categories WHERE id = ?");
@@ -880,7 +880,7 @@ switch (true) {
         $input = getInput();
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("UPDATE product_categories SET slug=?, name=?, description=?, display_order=?, is_active=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE product_categories SET slug=?, name=?, description=?, display_order=?, is_active=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['slug'] ?? '', $input['name'] ?? '', $input['description'] ?? null, $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM product_categories WHERE id = ?");
@@ -927,7 +927,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("INSERT INTO sectors (id, name, slug, description, icon, color, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO sectors (id, name, slug, description, icon, color, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['name'] ?? '', $input['slug'] ?? '', $input['description'] ?? null, $input['icon'] ?? null, $input['color'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM sectors WHERE id = ?");
@@ -951,7 +951,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("UPDATE sectors SET name=?, slug=?, description=?, icon=?, color=?, image_url=?, display_order=?, is_active=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE sectors SET name=?, slug=?, description=?, icon=?, color=?, image_url=?, display_order=?, is_active=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['name'] ?? '', $input['slug'] ?? '', $input['description'] ?? null, $input['icon'] ?? null, $input['color'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM sectors WHERE id = ?");
@@ -994,7 +994,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("INSERT INTO certifications (id, name, title, description, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO certifications (id, name, title, description, image_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['name'] ?? '', $input['title'] ?? '', $input['description'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM certifications WHERE id = ?");
@@ -1018,7 +1018,7 @@ switch (true) {
         }
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("UPDATE certifications SET name=?, title=?, description=?, image_url=?, display_order=?, is_active=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE certifications SET name=?, title=?, description=?, image_url=?, display_order=?, is_active=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['name'] ?? '', $input['title'] ?? '', $input['description'] ?? null, $imageUrl, $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM certifications WHERE id = ?");
@@ -1075,7 +1075,7 @@ switch (true) {
         }
 
         $isPublished = isset($input['is_published']) ? ($input['is_published'] ? 1 : 0) : 0;
-        $stmt = $conn->prepare("INSERT INTO news_articles (id, title, slug, excerpt, content, image_url, is_published, published_at, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO news_articles (id, title, slug, excerpt, content, image_url, is_published, published_at, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['title'] ?? '', $input['slug'] ?? '', $input['excerpt'] ?? null, $input['content'] ?? null, $imageUrl, $isPublished, $input['published_at'] ?? null]);
 
         $stmt = $conn->prepare("SELECT * FROM news_articles WHERE id = ?");
@@ -1099,7 +1099,7 @@ switch (true) {
         }
 
         $isPublished = isset($input['is_published']) ? ($input['is_published'] ? 1 : 0) : 0;
-        $stmt = $conn->prepare("UPDATE news_articles SET title=?, slug=?, excerpt=?, content=?, image_url=?, is_published=?, published_at=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE news_articles SET title=?, slug=?, excerpt=?, content=?, image_url=?, is_published=?, published_at=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['title'] ?? '', $input['slug'] ?? '', $input['excerpt'] ?? null, $input['content'] ?? null, $imageUrl, $isPublished, $input['published_at'] ?? null, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM news_articles WHERE id = ?");
@@ -1139,7 +1139,7 @@ switch (true) {
         $id = generateUUID();
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("INSERT INTO job_openings (id, title, department, location, type, employment_type, description, requirements, responsibilities, is_active, display_order, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO job_openings (id, title, department, location, type, employment_type, description, requirements, responsibilities, is_active, display_order, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['title'] ?? '', $input['department'] ?? null, $input['location'] ?? null, $input['type'] ?? null, $input['employment_type'] ?? null, $input['description'] ?? null, json_encode($input['requirements'] ?? []), $input['responsibilities'] ?? null, $isActive, $input['display_order'] ?? 0]);
 
         $stmt = $conn->prepare("SELECT * FROM job_openings WHERE id = ?");
@@ -1153,7 +1153,7 @@ switch (true) {
         $input = getInput();
 
         $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
-        $stmt = $conn->prepare("UPDATE job_openings SET title=?, department=?, location=?, type=?, employment_type=?, description=?, requirements=?, responsibilities=?, is_active=?, display_order=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE job_openings SET title=?, department=?, location=?, type=?, employment_type=?, description=?, requirements=?, responsibilities=?, is_active=?, display_order=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['title'] ?? '', $input['department'] ?? null, $input['location'] ?? null, $input['type'] ?? null, $input['employment_type'] ?? null, $input['description'] ?? null, json_encode($input['requirements'] ?? []), $input['responsibilities'] ?? null, $isActive, $input['display_order'] ?? 0, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM job_openings WHERE id = ?");
@@ -1283,7 +1283,7 @@ switch (true) {
         $id = generateUUID();
 
         $keyCol = $dbType === 'pgsql' ? '"key"' : '`key`';
-        $stmt = $conn->prepare("INSERT INTO contact_info (id, $keyCol, value, label, synchronized_data) VALUES (?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO contact_info (id, $keyCol, value, label, synchronized_data) VALUES (?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['key'] ?? '', $input['value'] ?? '', $input['label'] ?? null]);
 
         $stmt = $conn->prepare("SELECT * FROM contact_info WHERE id = ?");
@@ -1299,10 +1299,10 @@ switch (true) {
         $value = $input['value'] ?? $_GET['value'] ?? null;
         $keyCol = $dbType === 'pgsql' ? '"key"' : '`key`';
         if (isset($input['key'])) {
-            $stmt = $conn->prepare("UPDATE contact_info SET $keyCol=?, value=?, label=?, synchronized_data=FALSE WHERE id=?");
+            $stmt = $conn->prepare("UPDATE contact_info SET $keyCol=?, value=?, label=?, synchronized_data=0 WHERE id=?");
             $stmt->execute([$input['key'], $value ?? '', $input['label'] ?? null, $m[1]]);
         } else {
-            $stmt = $conn->prepare("UPDATE contact_info SET value=?, synchronized_data=FALSE WHERE id=?");
+            $stmt = $conn->prepare("UPDATE contact_info SET value=?, synchronized_data=0 WHERE id=?");
             $stmt->execute([$value ?? '', $m[1]]);
         }
 
@@ -1403,7 +1403,7 @@ switch (true) {
         $id = 'seo-' . generateUUID();
 
         $stmt = $conn->prepare("INSERT INTO seo_keywords (id, keyword, description, target_page, priority, search_volume, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql')
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         $stmt->execute([$id, $input['keyword'] ?? '', $input['description'] ?? '', $input['target_page'] ?? '', $input['priority'] ?? 1, $input['search_volume'] ?? '', $isActive]);
@@ -1418,7 +1418,7 @@ switch (true) {
         requireAuth($jwtSecret);
         $input = getInput();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql')
             $isActive = $input['is_active'] ?? true ? 1 : 0;
 
@@ -1481,8 +1481,8 @@ switch (true) {
         $input = getInput();
         $id = 'spm-' . generateUUID();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
-        $noIndex = isset($input['no_index']) ? ($input['no_index'] ? 'TRUE' : 'FALSE') : 'FALSE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
+        $noIndex = isset($input['no_index']) ? ($input['no_index'] ? 1 : 0) : 0;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
             $noIndex = $input['no_index'] ?? false ? 1 : 0;
@@ -1501,8 +1501,8 @@ switch (true) {
         requireAuth($jwtSecret);
         $input = getInput();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
-        $noIndex = isset($input['no_index']) ? ($input['no_index'] ? 'TRUE' : 'FALSE') : 'FALSE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
+        $noIndex = isset($input['no_index']) ? ($input['no_index'] ? 1 : 0) : 0;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
             $noIndex = $input['no_index'] ?? false ? 1 : 0;
@@ -1556,7 +1556,7 @@ switch (true) {
         $input = getInput();
         $id = 'dir-' . generateUUID();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         }
@@ -1566,7 +1566,7 @@ switch (true) {
             $photoUrl = saveBase64ImageToFile($photoUrl, 'directors', $id);
         }
 
-        $stmt = $conn->prepare("INSERT INTO directors (id, name, title, bio, linkedin_url, photo_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO directors (id, name, title, bio, linkedin_url, photo_url, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['name'] ?? '', $input['title'] ?? '', $input['bio'] ?? '', $input['linkedin_url'] ?? '', $photoUrl, $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM directors WHERE id = ?");
@@ -1579,7 +1579,7 @@ switch (true) {
         requireAuth($jwtSecret);
         $input = getInput();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         }
@@ -1594,7 +1594,7 @@ switch (true) {
             $photoUrl = $row ? $row['photo_url'] : '';
         }
 
-        $stmt = $conn->prepare("UPDATE directors SET name=?, title=?, bio=?, linkedin_url=?, photo_url=?, display_order=?, is_active=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE directors SET name=?, title=?, bio=?, linkedin_url=?, photo_url=?, display_order=?, is_active=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['name'] ?? '', $input['title'] ?? '', $input['bio'] ?? '', $input['linkedin_url'] ?? '', $photoUrl, $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM directors WHERE id = ?");
@@ -1645,7 +1645,7 @@ switch (true) {
 
         foreach ($updates as $update) {
             if (isset($update['id']) && isset($update['content_value'])) {
-                $stmt = $conn->prepare("UPDATE about_us_content SET content_value=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=FALSE WHERE id=?");
+                $stmt = $conn->prepare("UPDATE about_us_content SET content_value=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=0 WHERE id=?");
                 $stmt->execute([$update['content_value'], $update['id']]);
             }
         }
@@ -1659,12 +1659,12 @@ switch (true) {
         requireAuth($jwtSecret);
         $input = getInput();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         }
 
-        $stmt = $conn->prepare("UPDATE about_us_content SET content_value=?, is_active=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE about_us_content SET content_value=?, is_active=?, updated_at=CURRENT_TIMESTAMP, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['content_value'] ?? '', $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM about_us_content WHERE id = ?");
@@ -1691,12 +1691,12 @@ switch (true) {
         $input = getInput();
         $id = 'ops-' . generateUUID();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         }
 
-        $stmt = $conn->prepare("INSERT INTO global_operations (id, location_name, country, description, operations_type, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, FALSE)");
+        $stmt = $conn->prepare("INSERT INTO global_operations (id, location_name, country, description, operations_type, display_order, is_active, synchronized_data) VALUES (?, ?, ?, ?, ?, ?, ?, 0)");
         $stmt->execute([$id, $input['location_name'] ?? '', $input['country'] ?? '', $input['description'] ?? '', $input['operations_type'] ?? '', $input['display_order'] ?? 0, $isActive]);
 
         $stmt = $conn->prepare("SELECT * FROM global_operations WHERE id = ?");
@@ -1709,12 +1709,12 @@ switch (true) {
         requireAuth($jwtSecret);
         $input = getInput();
 
-        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 'TRUE' : 'FALSE') : 'TRUE';
+        $isActive = isset($input['is_active']) ? ($input['is_active'] ? 1 : 0) : 1;
         if ($dbType === 'mysql') {
             $isActive = $input['is_active'] ?? true ? 1 : 0;
         }
 
-        $stmt = $conn->prepare("UPDATE global_operations SET location_name=?, country=?, description=?, operations_type=?, display_order=?, is_active=?, synchronized_data=FALSE WHERE id=?");
+        $stmt = $conn->prepare("UPDATE global_operations SET location_name=?, country=?, description=?, operations_type=?, display_order=?, is_active=?, synchronized_data=0 WHERE id=?");
         $stmt->execute([$input['location_name'] ?? '', $input['country'] ?? '', $input['description'] ?? '', $input['operations_type'] ?? '', $input['display_order'] ?? 0, $isActive, $m[1]]);
 
         $stmt = $conn->prepare("SELECT * FROM global_operations WHERE id = ?");
@@ -1837,7 +1837,7 @@ switch (true) {
                 }
             }
 
-            $boolValue = $dbType === 'pgsql' ? ($isNewVisitor ? 'TRUE' : 'FALSE') : ($isNewVisitor ? 1 : 0);
+            $boolValue = $dbType === 'pgsql' ? ($isNewVisitor ? 1 : 0) : ($isNewVisitor ? 1 : 0);
 
             $stmt = $conn->prepare("INSERT INTO visitor_sessions (id, visitor_id, ip_address, country, city, region, country_code, browser, browser_version, operating_system, device_type, screen_width, screen_height, language, referrer, referrer_domain, utm_source, utm_medium, utm_campaign, is_new_visitor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " . $boolValue . ")");
             $stmt->execute([$sessionId, $visitorId, $ipAddress, $country, $city, $region, $countryCode, $browser, $browserVersion, $os, $deviceType, $screenWidth, $screenHeight, $language, $referrer, $referrerDomain, $utmSource, $utmMedium, $utmCampaign]);
@@ -1915,7 +1915,7 @@ switch (true) {
         $stmt->execute($baseParams);
         $uniqueVisitors = $stmt->fetch()['total'];
 
-        $boolCheck = $dbType === 'pgsql' ? 'TRUE' : '1';
+        $boolCheck = $dbType === 'pgsql' ? 1 : '1';
         $stmt = $conn->prepare("SELECT COUNT(*) as total FROM visitor_sessions WHERE started_at >= ? AND is_new_visitor = " . $boolCheck . $countryFilter);
         $stmt->execute($baseParams);
         $newVisitors = $stmt->fetch()['total'];
@@ -2137,8 +2137,8 @@ switch (true) {
             $days = 30;
         }
         $dateLimit = date('Y-m-d H:i:s', strtotime("-{$days} days"));
-        $boolTrue = $dbType === 'pgsql' ? 'TRUE' : '1';
-        $boolFalse = $dbType === 'pgsql' ? 'FALSE' : '0';
+        $boolTrue = $dbType === 'pgsql' ? 1 : '1';
+        $boolFalse = $dbType === 'pgsql' ? 0 : '0';
 
         // Exclude admin pages from page_views
         $pageExclude = "AND pv.page_path NOT LIKE '/admin%'";
@@ -2742,7 +2742,7 @@ switch (true) {
 
             if ($masterId) {
                 $isPostgres = $conn->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql';
-                $falseVal = $isPostgres ? 'FALSE' : '0';
+                $falseVal = $isPostgres ? 0 : '0';
                 $conn->prepare("UPDATE {$q}$table{$q} SET synchronized_data = $falseVal WHERE id = ?")->execute([$masterId]);
             }
         } else {

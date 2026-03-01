@@ -46,7 +46,7 @@ The system employs a client-server architecture. The frontend is built with Reac
 - Frontend proxy: /api/* routes to PHP API on port 8080
 - **Image paths:** All product/hero images use local paths (/uploads/products/, /uploads/hero_slides/, /images/products/, /images/hero/). No external (Supabase) URLs.
 - **Supabase fully removed:** No @supabase/supabase-js dependency, no Supabase client/functions/migrations in codebase.
-- **Automatic database initialization:** `database/init.sh` runs automatically before the PHP API starts. On first startup with an empty database, it executes `schema.sql` then `seed.sql` to create all tables and populate seed data. Subsequent startups skip initialization.
+- **Automatic database initialization:** `database/init.sh` runs automatically before the PHP API starts. On first startup with an empty database, it executes `schema_pg.sql` then `seed_pg.sql` to create all tables and populate seed data. Subsequent startups skip initialization. Original MySQL files (`schema.sql`, `seed.sql`) are kept for Ionos/MySQL production deployment.
 - **Seed data:** `database/seed.sql` contains production-matching data: 49 products (5 categories including oleochemicals), 5 hero slides, 10 sectors, 3 certifications, 5 news articles, 4 job openings, 2 directors, 4 global operations, 15 About Us content blocks, SEO keywords, newsletter subscribers. Safe for new instance creation.
 
 ## External Dependencies
