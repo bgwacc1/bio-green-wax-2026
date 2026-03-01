@@ -2361,7 +2361,7 @@ switch (true) {
 
         $items = [];
         $languages = ['zh', 'es', 'fr', 'ar', 'pt', 'ru', 'de', 'ja', 'sw', 'tr', 'vi', 'ko', 'th', 'it', 'pl'];
-        $falseVal = ($GLOBALS['dbType'] === 'pgsql') ? 'false' : '0';
+        $falseVal = 0;
         $totalPending = 0;
 
         // Check products where synchronized_data = 0
