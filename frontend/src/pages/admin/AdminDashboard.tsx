@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
-import { FileText, ImageIcon, Phone, Newspaper, Package, Info, FolderOpen, Users, Factory, Award, Briefcase, MessageSquare, Search, BarChart3, Languages, Database, Mail, Eye } from "lucide-react";
+import { FileText, ImageIcon, Phone, Newspaper, Package, Info, FolderOpen, Users, Factory, Award, Briefcase, MessageSquare, Search, BarChart3, Languages, Database, Mail, Eye, Map } from "lucide-react";
 import HeroSlidesManager from "@/components/admin/HeroSlidesManager";
 import ContactInfoManager from "@/components/admin/ContactInfoManager";
 import NewsManager from "@/components/admin/NewsManager";
@@ -20,6 +20,7 @@ import VisitorsPanel from "@/components/admin/VisitorsPanel";
 import TranslationSyncManager from "@/components/admin/TranslationSyncManager";
 import TablesManager from "@/components/admin/TablesManager";
 import NewsletterSubscribersManager from "@/components/admin/NewsletterSubscribersManager";
+import SitemapManager from "@/components/admin/SitemapManager";
 import { usePendingChanges } from "@/hooks/usePendingChanges";
 import AdminHeader from "@/components/admin/AdminHeader";
 import AdminNavTabs, { AdminTab } from "@/components/admin/AdminNavTabs";
@@ -40,6 +41,7 @@ const adminTabs: AdminTab[] = [
   { value: "enquiries", label: "Enquiries", shortLabel: "Enquiry", icon: MessageSquare },
   { value: "subscribers", label: "Subscribers", shortLabel: "Subs", icon: Mail },
   { value: "seo", label: "SEO Keywords", shortLabel: "SEO", icon: Search },
+  { value: "sitemap", label: "Sitemap", shortLabel: "Sitemap", icon: Map },
   { value: "sync", label: "Sync Translations", shortLabel: "Sync", icon: Languages },
   { value: "tables", label: "Tables", shortLabel: "Tables", icon: Database },
   { value: "specs", label: "Specifications", shortLabel: "Specs", icon: FileText },
@@ -131,6 +133,10 @@ const AdminDashboard = () => {
 
             <TabsContent value="seo" className="mt-0">
               <SEOKeywordsManager />
+            </TabsContent>
+
+            <TabsContent value="sitemap" className="mt-0">
+              <SitemapManager />
             </TabsContent>
 
             <TabsContent value="sync" forceMount className="mt-0 data-[state=inactive]:hidden">
