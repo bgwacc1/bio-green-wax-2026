@@ -26,11 +26,11 @@ fi
 
 echo "[DB Init] Initializing database..."
 
-echo "[DB Init] Running schema.sql..."
-psql "$DATABASE_URL" -f "$SCRIPT_DIR/schema.sql" 2>&1
+echo "[DB Init] Running schema_pg.sql..."
+psql "$DATABASE_URL" -f "$SCRIPT_DIR/schema_pg.sql" 2>&1
 
-echo "[DB Init] Running seed.sql..."
-psql "$DATABASE_URL" -f "$SCRIPT_DIR/seed.sql" 2>&1
+echo "[DB Init] Running seed_pg.sql..."
+psql "$DATABASE_URL" -f "$SCRIPT_DIR/seed_pg.sql" 2>&1
 
 FINAL_COUNT=$(psql "$DATABASE_URL" -t -c "SELECT COUNT(*) FROM users;" 2>/dev/null || echo "0")
 FINAL_COUNT=$(echo "$FINAL_COUNT" | tr -d ' ')

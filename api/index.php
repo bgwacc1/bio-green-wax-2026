@@ -633,7 +633,7 @@ switch (true) {
         $activeOnly = ($_GET['active_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $activeOnly
-            ? "SELECT * FROM hero_slides WHERE is_active = TRUE ORDER BY display_order ASC"
+            ? "SELECT * FROM hero_slides WHERE is_active = 1 ORDER BY display_order ASC"
             : "SELECT * FROM hero_slides ORDER BY display_order ASC";
         $slides = $conn->query($sql)->fetchAll();
         $translationFields = ['title', 'subtitle', 'cta_text'];
@@ -705,14 +705,14 @@ switch (true) {
         $featured = $_GET['featured'] ?? $_GET['featured_only'] ?? null;
         $lang = $_GET['lang'] ?? 'en';
 
-        $sql = "SELECT * FROM products WHERE is_active = TRUE";
+        $sql = "SELECT * FROM products WHERE is_active = 1";
         $params = [];
         if ($category) {
             $sql .= " AND category = ?";
             $params[] = $category;
         }
         if ($featured === 'true') {
-            $sql .= " AND is_featured = TRUE";
+            $sql .= " AND is_featured = 1";
         }
         $sql .= " ORDER BY priority_order ASC, display_order ASC";
 
@@ -848,7 +848,7 @@ switch (true) {
         $activeOnly = ($_GET['active_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $activeOnly
-            ? "SELECT * FROM product_categories WHERE is_active = TRUE ORDER BY display_order ASC"
+            ? "SELECT * FROM product_categories WHERE is_active = 1 ORDER BY display_order ASC"
             : "SELECT * FROM product_categories ORDER BY display_order ASC";
         $categories = $conn->query($sql)->fetchAll();
         $translationFields = ['name', 'description'];
@@ -900,7 +900,7 @@ switch (true) {
         $activeOnly = ($_GET['active_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $activeOnly
-            ? "SELECT * FROM sectors WHERE is_active = TRUE ORDER BY display_order ASC"
+            ? "SELECT * FROM sectors WHERE is_active = 1 ORDER BY display_order ASC"
             : "SELECT * FROM sectors ORDER BY display_order ASC";
         $sectors = $conn->query($sql)->fetchAll();
         $translationFields = ['name', 'description'];
@@ -971,7 +971,7 @@ switch (true) {
         $activeOnly = ($_GET['active_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $activeOnly
-            ? "SELECT * FROM certifications WHERE is_active = TRUE ORDER BY display_order ASC"
+            ? "SELECT * FROM certifications WHERE is_active = 1 ORDER BY display_order ASC"
             : "SELECT * FROM certifications ORDER BY display_order ASC";
         $certs = $conn->query($sql)->fetchAll();
         $translationFields = ['name', 'description'];
@@ -1038,7 +1038,7 @@ switch (true) {
         $publishedOnly = ($_GET['published_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $publishedOnly
-            ? "SELECT * FROM news_articles WHERE is_published = TRUE ORDER BY published_at DESC"
+            ? "SELECT * FROM news_articles WHERE is_published = 1 ORDER BY published_at DESC"
             : "SELECT * FROM news_articles ORDER BY created_at DESC";
         $articles = $conn->query($sql)->fetchAll();
         $translationFields = ['title', 'excerpt', 'content'];
@@ -1119,7 +1119,7 @@ switch (true) {
         $activeOnly = ($_GET['active_only'] ?? 'true') !== 'false';
         $lang = $_GET['lang'] ?? 'en';
         $sql = $activeOnly
-            ? "SELECT * FROM job_openings WHERE is_active = TRUE ORDER BY display_order ASC"
+            ? "SELECT * FROM job_openings WHERE is_active = 1 ORDER BY display_order ASC"
             : "SELECT * FROM job_openings ORDER BY display_order ASC";
         $jobs = $conn->query($sql)->fetchAll();
         $translationFields = ['title', 'description', 'requirements', 'responsibilities'];
@@ -1191,7 +1191,7 @@ switch (true) {
     case $method === 'PUT' && preg_match('#^/job-applications/([^/]+)/read$#', $uri, $m):
         checkDbConnection($conn);
         requireAuth($jwtSecret);
-        $conn->prepare("UPDATE job_applications SET is_read = TRUE WHERE id = ?")->execute([$m[1]]);
+        $conn->prepare("UPDATE job_applications SET is_read = 1 WHERE id = ?")->execute([$m[1]]);
         jsonResponse(['success' => true]);
         break;
 
@@ -1260,7 +1260,7 @@ switch (true) {
     case $method === 'PUT' && preg_match('#^/contact-enquiries/([^/]+)/read$#', $uri, $m):
         checkDbConnection($conn);
         requireAuth($jwtSecret);
-        $conn->prepare("UPDATE contact_enquiries SET is_read = TRUE WHERE id = ?")->execute([$m[1]]);
+        $conn->prepare("UPDATE contact_enquiries SET is_read = 1 WHERE id = ?")->execute([$m[1]]);
         jsonResponse(['success' => true]);
         break;
 
@@ -1469,7 +1469,7 @@ switch (true) {
     case $method === 'GET' && $uri === '/seo-page-meta/by-path':
         checkDbConnection($conn);
         $path = $_GET['path'] ?? '/';
-        $stmt = $conn->prepare("SELECT * FROM seo_page_meta WHERE page_path = ? AND is_active = TRUE");
+        $stmt = $conn->prepare("SELECT * FROM seo_page_meta WHERE page_path = ? AND is_active = 1");
         $stmt->execute([$path]);
         $meta = $stmt->fetch();
         jsonResponse($meta ?: ['error' => 'No custom meta for this page']);
@@ -1626,7 +1626,7 @@ switch (true) {
         checkDbConnection($conn);
         $section = $_GET['section'] ?? '';
         $lang = $_GET['lang'] ?? 'en';
-        $stmt = $conn->prepare("SELECT * FROM about_us_content WHERE section = ? AND is_active = TRUE ORDER BY display_order ASC");
+        $stmt = $conn->prepare("SELECT * FROM about_us_content WHERE section = ? AND is_active = 1 ORDER BY display_order ASC");
         $stmt->execute([$section]);
         $content = $stmt->fetchAll();
         $translationFields = ['content_value'];
@@ -2237,7 +2237,7 @@ switch (true) {
     // ============ LANGUAGES & TRANSLATIONS ============
     case $method === 'GET' && $uri === '/languages':
         checkDbConnection($conn);
-        $stmt = $conn->query("SELECT * FROM supported_languages WHERE is_active = TRUE ORDER BY display_order");
+        $stmt = $conn->query("SELECT * FROM supported_languages WHERE is_active = 1 ORDER BY display_order");
         jsonResponse($stmt->fetchAll());
         break;
 
@@ -2354,7 +2354,7 @@ switch (true) {
         jsonResponse(['success' => true]);
         break;
 
-    // Translation Sync - Scan for unsynchronized content (checks synchronized_data = FALSE)
+    // Translation Sync - Scan for unsynchronized content (checks synchronized_data = 0)
     case $method === 'GET' && ($uri === '/sync/scan' || $uri === '/api/sync/scan'):
         checkDbConnection($conn);
         requireAuth($jwtSecret);
@@ -2364,77 +2364,77 @@ switch (true) {
         $falseVal = ($GLOBALS['dbType'] === 'pgsql') ? 'false' : '0';
         $totalPending = 0;
 
-        // Check products where synchronized_data = FALSE
+        // Check products where synchronized_data = 0
         $stmt = $conn->query("SELECT id, name FROM products WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'product', 'id' => $row['id'], 'name' => $row['name'], 'fields' => ['name', 'description', 'full_description'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check product_categories where synchronized_data = FALSE
+        // Check product_categories where synchronized_data = 0
         $stmt = $conn->query("SELECT id, name FROM product_categories WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'category', 'id' => $row['id'], 'name' => $row['name'], 'fields' => ['name', 'description'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check sectors where synchronized_data = FALSE
+        // Check sectors where synchronized_data = 0
         $stmt = $conn->query("SELECT id, name FROM sectors WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'sector', 'id' => $row['id'], 'name' => $row['name'], 'fields' => ['name', 'description'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check certifications where synchronized_data = FALSE
+        // Check certifications where synchronized_data = 0
         $stmt = $conn->query("SELECT id, name FROM certifications WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'certification', 'id' => $row['id'], 'name' => $row['name'], 'fields' => ['name', 'title', 'description'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check news_articles where synchronized_data = FALSE
+        // Check news_articles where synchronized_data = 0
         $stmt = $conn->query("SELECT id, title FROM news_articles WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'news', 'id' => $row['id'], 'name' => $row['title'], 'fields' => ['title', 'excerpt', 'content'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check job_openings where synchronized_data = FALSE
+        // Check job_openings where synchronized_data = 0
         $stmt = $conn->query("SELECT id, title FROM job_openings WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'job', 'id' => $row['id'], 'name' => $row['title'], 'fields' => ['title', 'description', 'requirements', 'responsibilities'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check hero_slides where synchronized_data = FALSE
+        // Check hero_slides where synchronized_data = 0
         $stmt = $conn->query("SELECT id, title FROM hero_slides WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'hero_slide', 'id' => $row['id'], 'name' => $row['title'], 'fields' => ['title', 'subtitle', 'cta_text'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check directors where synchronized_data = FALSE
+        // Check directors where synchronized_data = 0
         $stmt = $conn->query("SELECT id, name FROM directors WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'director', 'id' => $row['id'], 'name' => $row['name'], 'fields' => ['name', 'title', 'bio'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check global_operations where synchronized_data = FALSE
+        // Check global_operations where synchronized_data = 0
         $stmt = $conn->query("SELECT id, location_name FROM global_operations WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'global_operation', 'id' => $row['id'], 'name' => $row['location_name'], 'fields' => ['location_name', 'description'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check about_us_content where synchronized_data = FALSE
+        // Check about_us_content where synchronized_data = 0
         $stmt = $conn->query("SELECT id, content_key FROM about_us_content WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'about_content', 'id' => $row['id'], 'name' => $row['content_key'], 'fields' => ['content_value'], 'languageCount' => count($languages)];
             $totalPending += count($languages);
         }
 
-        // Check contact_info where synchronized_data = FALSE
+        // Check contact_info where synchronized_data = 0
         $stmt = $conn->query("SELECT id, \"key\" as info_key FROM contact_info WHERE synchronized_data = $falseVal");
         foreach ($stmt->fetchAll() as $row) {
             $items[] = ['type' => 'contact_info', 'id' => $row['id'], 'name' => $row['info_key'], 'fields' => ['value', 'label'], 'languageCount' => count($languages)];

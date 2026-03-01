@@ -11,8 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "@testing-library/user-event": "^14.6.1",
+    "@vitejs/plugin-react": "^5.1.4",
     "@vitest/coverage-v8": "^3.2.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-helmet-async": "^2.0.5",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vite": "^7.3.1"
   }
 }
