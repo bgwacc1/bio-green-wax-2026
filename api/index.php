@@ -3203,7 +3203,7 @@ switch (true) {
         echo $xml;
         exit;
 
-    case $method === 'GET' && $uri === '/robots.txt':
+    case $method === 'GET' && ($uri === '/robots.txt' || $uri === '/robot.txt'):
         header('Content-Type: text/plain; charset=utf-8');
 
         $robotsTxt = "User-agent: *\n";
