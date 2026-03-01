@@ -5986,7 +5986,7 @@ INSERT INTO "supported_languages" ("code", "name", "native_name", "direction", "
 --
 
 INSERT INTO "users" ("id", "email", "password_hash", "full_name", "created_at", "updated_at", "email_confirmed_at", "last_sign_in_at") VALUES
-('11111111-1111-1111-1111-111111111111', 'admin@biogreenwax.co.uk', '$2y$12$tvJWYa3rb5sjdtSIZxq91ulPHcOiLz4gwKmSlziPCy7Yq65HO3/PW', NULL, '2026-02-05 21:03:49', '2026-02-27 05:33:53', '2026-02-05 21:03:49', '2026-02-27 05:33:53'),
+('11111111-1111-1111-1111-111111111111', 'admin@biogreenwax.com', '$2y$12$tvJWYa3rb5sjdtSIZxq91ulPHcOiLz4gwKmSlziPCy7Yq65HO3/PW', NULL, '2026-02-05 21:03:49', '2026-02-27 05:33:53', '2026-02-05 21:03:49', '2026-02-27 05:33:53'),
 ('user-0cfe5860b09e7da8', 'umesh.gowda@biogreenwax.com', '$2y$10$/Snm2btxmaGCvySSKcEp.u0TVUaSxpybDuUdcRZWV6VKU.wlQ6/RW', NULL, '2026-02-11 18:00:57', '2026-02-11 18:00:57', NULL, NULL),
 ('user-0fbd2a50cb5311ac', 'admin@biogreenwax.com', '$2y$10$NaI/zuE2108rkT35tjuXAeNc4U9qyG7d0olLGFuzZHPCT6HWptEWi', NULL, '2026-02-11 18:01:28', '2026-02-11 18:01:28', NULL, NULL),
 ('user-fac24943af40fd50', 'hantash@biogreenwax.com', '$2y$10$pJiPMgpqXcIgp.J7SJrMT.B8NGcZMzN1BT87H/heYV2eOR8Ovzp6a', NULL, '2026-02-11 18:02:00', '2026-02-11 18:02:00', NULL, NULL);

@@ -267,7 +267,7 @@ SELECT COUNT(*) FROM hero_slides;
 
 -- Check admin user exists
 SELECT email FROM users;
--- Should show: admin@biogreenwax.co.uk
+-- Should show: admin@biogreenwax.com
 ```
 
 ---
@@ -565,7 +565,7 @@ The sample data includes a default admin account:
 | Field | Value |
 |-------|-------|
 | Login URL | `https://yourdomain.com/admin/login` |
-| Email | `admin@biogreenwax.co.uk` |
+| Email | `admin@biogreenwax.com` |
 | Password | `Admin123!` |
 
 **Change this password immediately after first login!**
@@ -612,8 +612,8 @@ There is also a content creator test account:
 
 ### 5. Update Domain References
 
-If your domain is different from `biogreenwax.co.uk`, update the SEO component in `frontend/src/components/SEO.tsx` before building:
-- Search for `biogreenwax.co.uk` and replace with your domain
+If your domain is different from `biogreenwax.com`, update the SEO component in `frontend/src/components/SEO.tsx` before building:
+- Search for `biogreenwax.com` and replace with your domain
 - Rebuild the frontend (`npm run build`)
 - Re-upload the `dist/` files
 
@@ -721,7 +721,7 @@ When you add or edit content in English:
 
 ```sql
 -- Reset admin password to 'Admin123!'
-UPDATE users SET password_hash = '$2y$10$YourNewBcryptHash' WHERE email = 'admin@biogreenwax.co.uk';
+UPDATE users SET password_hash = '$2y$10$YourNewBcryptHash' WHERE email = 'admin@biogreenwax.com';
 ```
 
 ### CSS/JS Not Loading (Blank White Page)

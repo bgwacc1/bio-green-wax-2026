@@ -53,7 +53,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://biogreenwax.com/sitemap.xml
-Sitemap: https://biogreenwax.co.uk/sitemap.xml
+Sitemap: https://biogreenwax.com/sitemap.xml
 
 Disallow: /admin
 Disallow: /api

@@ -43,7 +43,7 @@ The system employs a client-server architecture. The frontend is built with Reac
 - All three workflows running: Frontend (Vite on port 5000), PHP API (port 8080), Translation Service (port 3001)
 - PostgreSQL database with 192 tables populated with seed data (49 products across 5 categories, 10 sectors, certifications, news, jobs)
 - OpenAI integration configured via Replit AI Integrations (AI_INTEGRATIONS_OPENAI_BASE_URL / AI_INTEGRATIONS_OPENAI_API_KEY)
-- Default admin: admin@biogreenwax.co.uk / Admin123!
+- Default admin: admin@biogreenwax.com / Admin123!
 - Frontend proxy: /api/* routes to PHP API on port 8080
 - **Image paths:** All product/hero images use local paths (/uploads/products/, /uploads/hero_slides/, /images/products/, /images/hero/). No external (Supabase) URLs.
 - **Supabase fully removed:** No @supabase/supabase-js dependency, no Supabase client/functions/migrations in codebase.

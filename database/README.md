@@ -81,7 +81,7 @@ define('JWT_SECRET', 'generate-a-secure-random-string-here');
 
 After importing the data, you can log in with:
 
-- **Email:** `admin@biogreenwax.co.uk`
+- **Email:** `admin@biogreenwax.com`
 - **Password:** `Admin123!`
 
 **Important:** Change this password immediately after first login in production!

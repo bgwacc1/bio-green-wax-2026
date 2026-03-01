@@ -661,10 +661,10 @@ const About = () => {
                     <div className="flex items-center gap-2 md:gap-3">
                       <Mail className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                       <a
-                        href="mailto:info@biogreenwax.co.uk"
+                        href="mailto:info@biogreenwax.com"
                         className="text-muted-foreground hover:text-primary transition-colors text-xs md:text-base"
                       >
-                        info@biogreenwax.co.uk
+                        info@biogreenwax.com
                       </a>
                     </div>
                     <div className="flex items-start gap-2 md:gap-3">

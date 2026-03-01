@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://biogreenwax.co.uk/sitemap.xml
+Sitemap: https://biogreenwax.com/sitemap.xml

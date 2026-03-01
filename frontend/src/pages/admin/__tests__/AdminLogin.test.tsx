@@ -95,11 +95,11 @@ describe("AdminLogin", () => {
     mockSignIn.mockResolvedValue({ error: null });
     renderLogin();
 
-    await user.type(screen.getByLabelText(/email/i), "admin@biogreenwax.co.uk");
+    await user.type(screen.getByLabelText(/email/i), "admin@biogreenwax.com");
     await user.type(screen.getByLabelText(/password/i), "Admin123!");
     await user.click(screen.getByRole("button", { name: /sign in/i }));
 
-    expect(mockSignIn).toHaveBeenCalledWith("admin@biogreenwax.co.uk", "Admin123!");
+    expect(mockSignIn).toHaveBeenCalledWith("admin@biogreenwax.com", "Admin123!");
   });
 
   it("navigates to /admin on successful login", async () => {

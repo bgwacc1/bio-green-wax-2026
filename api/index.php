@@ -3040,7 +3040,7 @@ switch (true) {
         break;
 
     case $method === 'GET' && $uri === '/sitemap.xml':
-        $baseUrl = 'https://biogreenwax.co.uk';
+        $baseUrl = 'https://biogreenwax.com';
         $languages = ['en','zh','es','fr','ar','pt','ru','de','ja','sw','tr','vi','ko','th','it','pl'];
 
         $staticPages = [
@@ -3148,7 +3148,7 @@ switch (true) {
         $robotsTxt .= "Disallow: /admin\n";
         $robotsTxt .= "Disallow: /api/\n";
         $robotsTxt .= "\n";
-        $robotsTxt .= "Sitemap: https://biogreenwax.co.uk/sitemap.xml\n";
+        $robotsTxt .= "Sitemap: https://biogreenwax.com/sitemap.xml\n";
 
         echo $robotsTxt;
         exit;

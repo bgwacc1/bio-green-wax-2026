@@ -21,7 +21,7 @@ const HreflangTags = ({ canonicalPath }: HreflangTagsProps) => {
   };
   
   const cleanPath = getCleanPath();
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://biogreenwax.co.uk';
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://biogreenwax.com';
   
   const getLanguageUrl = (langCode: string) => {
     if (langCode === DEFAULT_LANGUAGE) {
