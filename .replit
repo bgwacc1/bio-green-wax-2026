@@ -48,7 +48,7 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "bash database/init.sh; php -S 0.0.0.0:8080 -t api"
+args = "bash database/init.sh; php -S 0.0.0.0:8080 -t api api/router.php"
 waitForPort = 8080
 
 [[workflows.workflow]]

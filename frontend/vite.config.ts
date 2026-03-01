@@ -31,6 +31,14 @@ export default defineConfig(({ mode }) => ({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/sitemap.xml': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/robots.txt': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
     },
   },
   plugins: [react()],

@@ -3039,6 +3039,108 @@ switch (true) {
         jsonResponse(['success' => true]);
         break;
 
+    case $method === 'GET' && $uri === '/sitemap.xml':
+        checkDbConnection($conn);
+
+        $baseUrl = 'https://biogreenwax.co.uk';
+        $languages = ['en','zh','es','fr','ar','pt','ru','de','ja','sw','tr','vi','ko','th','it','pl'];
+
+        $noIndexPaths = [];
+        $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
+        while ($row = $stmt->fetch()) {
+            $noIndexPaths[] = $row['page_path'];
+        }
+
+        $staticPages = [
+            ['path' => '/', 'changefreq' => 'weekly', 'priority' => '1.0'],
+            ['path' => '/about', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['path' => '/products', 'changefreq' => 'weekly', 'priority' => '0.9'],
+            ['path' => '/certifications', 'changefreq' => 'monthly', 'priority' => '0.7'],
+            ['path' => '/news', 'changefreq' => 'weekly', 'priority' => '0.7'],
+            ['path' => '/careers', 'changefreq' => 'weekly', 'priority' => '0.6'],
+            ['path' => '/contact', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['path' => '/sectors', 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ];
+
+        $products = $conn->query("SELECT slug, created_at FROM products WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
+        $sectors = $conn->query("SELECT slug, created_at FROM sectors WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
+        $news = $conn->query("SELECT slug, published_at FROM news_articles WHERE is_published = 1 ORDER BY published_at DESC")->fetchAll();
+
+        header('Content-Type: application/xml; charset=utf-8');
+        header('Cache-Control: public, max-age=3600');
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . "\n";
+        $xml .= '        xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
+
+        $addUrl = function($path, $changefreq, $priority, $lastmod, $includeHreflang = true) use ($baseUrl, $languages, $noIndexPaths, &$xml) {
+            if (in_array($path, $noIndexPaths)) return;
+
+            $fullPath = $path === '/' ? '' : $path;
+            $xml .= "  <url>\n";
+            $xml .= "    <loc>{$baseUrl}{$fullPath}</loc>\n";
+
+            if ($includeHreflang) {
+                foreach ($languages as $lang) {
+                    $langPrefix = $lang === 'en' ? '' : '/' . $lang;
+                    $href = $baseUrl . $langPrefix . ($path === '/' ? '' : $path);
+                    if ($lang === 'en' && $path === '/') $href = $baseUrl . '/';
+                    $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"{$lang}\" href=\"{$href}\"/>\n";
+                }
+                $defaultHref = $baseUrl . ($path === '/' ? '/' : $path);
+                $xml .= "    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"{$defaultHref}\"/>\n";
+            }
+
+            $xml .= "    <lastmod>{$lastmod}</lastmod>\n";
+            $xml .= "    <changefreq>{$changefreq}</changefreq>\n";
+            $xml .= "    <priority>{$priority}</priority>\n";
+            $xml .= "  </url>\n";
+        };
+
+        foreach ($staticPages as $page) {
+            $addUrl($page['path'], $page['changefreq'], $page['priority'], date('Y-m-d'));
+        }
+
+        foreach ($products as $product) {
+            $lastmod = date('Y-m-d', strtotime($product['created_at']));
+            $addUrl('/products/' . $product['slug'], 'weekly', '0.8', $lastmod);
+        }
+
+        foreach ($sectors as $sector) {
+            $lastmod = date('Y-m-d', strtotime($sector['created_at']));
+            $addUrl('/sectors/' . $sector['slug'], 'monthly', '0.7', $lastmod);
+        }
+
+        foreach ($news as $article) {
+            $lastmod = date('Y-m-d', strtotime($article['published_at']));
+            $addUrl('/news/' . $article['slug'], 'monthly', '0.6', $lastmod);
+        }
+
+        $xml .= "</urlset>\n";
+        echo $xml;
+        exit;
+
+    case $method === 'GET' && $uri === '/robots.txt':
+        checkDbConnection($conn);
+
+        header('Content-Type: text/plain; charset=utf-8');
+
+        $robotsTxt = "User-agent: *\n";
+        $robotsTxt .= "Allow: /\n";
+
+        $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
+        while ($row = $stmt->fetch()) {
+            $robotsTxt .= "Disallow: " . $row['page_path'] . "\n";
+        }
+
+        $robotsTxt .= "Disallow: /admin\n";
+        $robotsTxt .= "Disallow: /api/\n";
+        $robotsTxt .= "\n";
+        $robotsTxt .= "Sitemap: https://biogreenwax.co.uk/sitemap.xml\n";
+
+        echo $robotsTxt;
+        exit;
+
     default:
         jsonResponse(['error' => 'Not found'], 404);
 }
