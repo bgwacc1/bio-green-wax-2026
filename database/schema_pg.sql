@@ -277,7 +277,7 @@ CREATE TABLE "about_us_content_zh" (
 --
 
 CREATE TABLE "bot_visits" (
- "id" BIGINT NOT NULL,
+ "id" BIGSERIAL NOT NULL,
  "bot_name" varchar(100) NOT NULL,
  "user_agent" TEXT DEFAULT NULL,
  "ip_address" varchar(45) DEFAULT NULL,
@@ -2386,7 +2386,7 @@ CREATE TABLE "news_articles_zh" (
 --
 
 CREATE TABLE "page_views" (
- "id" INTEGER NOT NULL,
+ "id" SERIAL NOT NULL,
  "session_id" varchar(50) DEFAULT NULL,
  "page_path" varchar(500) NOT NULL,
  "page_title" varchar(500) DEFAULT NULL,
