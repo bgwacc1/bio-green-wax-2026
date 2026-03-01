@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useHeroSlides } from "@/hooks/useCMS";
+import { useHeroSlides, HeroSlide } from "@/hooks/useCMS";
 import { useLanguage } from "@/i18n/LanguageContext";
 import OptimizedImage from "@/components/OptimizedImage";
 
@@ -11,11 +11,15 @@ import heroFarm from "@/assets/hero-farm.jpeg";
 import heroOils from "@/assets/hero-oils.jpeg";
 import heroIndustrial from "@/assets/hero-industrial.jpeg";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  preloadedSlides?: HeroSlide[];
+}
+
+const HeroSection = ({ preloadedSlides }: HeroSectionProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { t, getLocalizedPath, currentLanguage } = useLanguage();
-  // Pass language to hook - translations are automatically merged by API
-  const { data: dynamicSlides } = useHeroSlides(false, currentLanguage);
+  const { data: fetchedSlides } = useHeroSlides(false, currentLanguage);
+  const dynamicSlides = preloadedSlides || fetchedSlides;
 
   const fallbackImages = [heroFarm, heroOils, heroFarm, heroIndustrial];
 

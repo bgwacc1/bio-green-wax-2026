@@ -42,6 +42,39 @@ const queryClient = new QueryClient({
   },
 });
 
+const detectLangFromPath = (): string => {
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const validLangs = ['en','de','fr','es','it','pt','ru','zh','ja','ko','ar','th','vi','tr','pl','sw'];
+  if (pathParts.length > 0 && validLangs.includes(pathParts[0])) {
+    return pathParts[0];
+  }
+  return localStorage.getItem('preferredLanguage') || 'en';
+};
+
+const prefetchHomepageData = () => {
+  const lang = detectLangFromPath();
+  const url = (import.meta.env.DEV ? '/api' : 'https://www.biogreenwax.com') + `/homepage-data?lang=${lang}`;
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error('prefetch failed');
+      return res.json();
+    })
+    .then(data => {
+      if (!data || !data.hero_slides) return;
+      queryClient.setQueryData(["homepage-data", lang], data);
+      queryClient.setQueryData(["hero-slides", false, lang], data.hero_slides);
+      queryClient.setQueryData(["products", "featured", lang], data.featured_products);
+      queryClient.setQueryData(["sectors", true, lang], data.sectors);
+      queryClient.setQueryData(["product-categories", true, lang], data.product_categories);
+      queryClient.setQueryData(["news-articles", true, lang], data.news_articles);
+      queryClient.setQueryData(["contact-info"], data.contact_info);
+    })
+    .catch(() => {});
+};
+if (!window.location.pathname.startsWith('/admin')) {
+  prefetchHomepageData();
+}
+
 const PublicRoutes = () => (
   <Routes>
     <Route index element={<Index />} />

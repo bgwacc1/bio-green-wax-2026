@@ -15,7 +15,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 const Index = () => {
   const { data: seoMeta } = useSEOPageMeta("/");
   const { currentLanguage } = useLanguage();
-  useHomepageData(currentLanguage);
+  const { data: homepageData } = useHomepageData(currentLanguage);
 
   return (
     <Layout>
@@ -28,12 +28,15 @@ const Index = () => {
       />
       <OrganizationSchema />
       <LocalBusinessSchema />
-      <HeroSection />
+      <HeroSection preloadedSlides={homepageData?.hero_slides} />
       <ServicesSection />
-      <SectorsSection />
-      <ProductsSection />
+      <SectorsSection preloadedSectors={homepageData?.sectors} />
+      <ProductsSection
+        preloadedProducts={homepageData?.featured_products}
+        preloadedCategories={homepageData?.product_categories}
+      />
       <StatsSection />
-      <NewsSection />
+      <NewsSection preloadedArticles={homepageData?.news_articles} />
       <CTASection />
     </Layout>
   );

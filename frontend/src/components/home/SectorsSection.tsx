@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Flame, Sparkles, UtensilsCrossed, Package, Shirt, Cog, Factory, Droplet, Leaf, Zap, Building2, Truck, Beaker, Pill, Heart, Sun, Moon, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useSectors } from "@/hooks/useCMS";
+import { useSectors, Sector } from "@/hooks/useCMS";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -10,9 +10,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Beaker, Pill, Heart, Sun, Moon, Star
 };
 
-const SectorsSection = () => {
+interface SectorsSectionProps {
+  preloadedSectors?: Sector[];
+}
+
+const SectorsSection = ({ preloadedSectors }: SectorsSectionProps) => {
   const { t, getLocalizedPath, currentLanguage } = useLanguage();
-  const { data: dbSectors, isLoading } = useSectors(true, currentLanguage);
+  const { data: fetchedSectors, isLoading } = useSectors(true, currentLanguage);
+  const dbSectors = preloadedSectors || fetchedSectors;
 
   const sectors = dbSectors?.map(s => ({
     icon: s.icon,
@@ -22,11 +27,11 @@ const SectorsSection = () => {
     color: s.color,
   })) || [];
 
-  if (!isLoading && sectors.length === 0) {
+  if (!preloadedSectors && !isLoading && sectors.length === 0) {
     return null;
   }
 
-  if (isLoading) {
+  if (!preloadedSectors && isLoading) {
     return (
       <section className="section-padding">
         <div className="container-wide">

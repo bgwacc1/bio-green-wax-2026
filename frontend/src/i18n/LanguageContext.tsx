@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, getLanguageByCode, getLanguageDirection, isValidLanguageCode, detectLanguageFromRegion, Language } from './languages';
+import enTranslations from './locales/en';
 
 interface TranslationData {
   [key: string]: string;
@@ -20,6 +21,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const translationCache: Record<string, TranslationData> = {};
+translationCache['en'] = enTranslations;
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const location = useLocation();
@@ -46,7 +48,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [location.pathname]);
 
   const [currentLanguage, setCurrentLanguage] = useState<string>(getLanguageFromPath);
-  const [translations, setTranslations] = useState<TranslationData>({});
+  const [translations, setTranslations] = useState<TranslationData>(enTranslations);
   const [isLoading, setIsLoading] = useState(false);
 
   const loadTranslations = useCallback(async (lang: string) => {

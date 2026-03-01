@@ -202,7 +202,7 @@ export function useAnalytics(): void {
       }
     };
 
-    trackPageView();
+    setTimeout(() => trackPageView(), 100);
 
     const handleBeforeUnload = () => {
       const timeOnPage = Math.round((Date.now() - pageStartTime.current) / 1000);

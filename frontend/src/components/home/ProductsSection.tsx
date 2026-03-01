@@ -2,21 +2,28 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader2, Package } from "lucide-react";
-import { useFeaturedProducts, useProductCategories } from "@/hooks/useCMS";
+import { useFeaturedProducts, useProductCategories, Product, ProductCategory } from "@/hooks/useCMS";
 import { useLanguage } from "@/i18n/LanguageContext";
 import OptimizedImage from "@/components/OptimizedImage";
 
-const ProductsSection = () => {
+interface ProductsSectionProps {
+  preloadedProducts?: Product[];
+  preloadedCategories?: ProductCategory[];
+}
+
+const ProductsSection = ({ preloadedProducts, preloadedCategories }: ProductsSectionProps) => {
   const { t, getLocalizedPath, currentLanguage } = useLanguage();
-  const { data: featuredProducts, isLoading } = useFeaturedProducts(currentLanguage);
-  const { data: dbCategories } = useProductCategories(true, currentLanguage);
+  const { data: fetchedProducts, isLoading } = useFeaturedProducts(currentLanguage);
+  const { data: fetchedCategories } = useProductCategories(true, currentLanguage);
+  const featuredProducts = preloadedProducts || fetchedProducts;
+  const dbCategories = preloadedCategories || fetchedCategories;
 
   const getCategoryLabel = (categorySlug: string, fallbackLabel?: string): string => {
     const cat = dbCategories?.find(c => c.slug === categorySlug);
     return cat?.name || fallbackLabel || categorySlug;
   };
 
-  if (isLoading) {
+  if (!preloadedProducts && isLoading) {
     return (
       <section className="section-padding bg-muted">
         <div className="container-wide">
