@@ -1,0 +1,86 @@
+modules = ["nodejs-20", "web", "php-8.2", "postgresql-16"]
+[agent]
+expertMode = true
+integrations = ["javascript_openai_ai_integrations:2.0.0"]
+
+[nix]
+channel = "stable-25_05"
+packages = ["php84Extensions.pdo_pgsql"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Frontend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "PHP API"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Translation Service"
+
+[[workflows.workflow]]
+name = "Frontend"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npm run dev"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "PHP API"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash database/init.sh; php -S 0.0.0.0:8080 -t api"
+waitForPort = 8080
+
+[[workflows.workflow]]
+name = "Translation Service"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd translation-service && npm start"
+waitForPort = 3001
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
+
+[deployment]
+deploymentTarget = "static"
+build = ["bash", "-c", "cd frontend && npm run build"]
+publicDir = "frontend/build"
+
+[userenv]
+
+[userenv.shared]
+JWT_SECRET = "a4bf4fea989aee339f6e9200f37486a607af8624c1be646040f14b1a85b36147"

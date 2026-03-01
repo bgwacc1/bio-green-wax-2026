@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Bio Green Wax Ltd - Design System
+   Primary: Deep Forest Green
+   Secondary: Light Green
+   Accent: Golden Yellow/Amber
+*/
+
+@layer base {
+  :root {
+    /* Forest Green Primary */
+    --primary: 142 50% 25%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Light Green Secondary */
+    --secondary: 142 30% 92%;
+    --secondary-foreground: 142 50% 20%;
+    
+    /* Golden Amber Accent */
+    --accent: 43 90% 50%;
+    --accent-foreground: 0 0% 10%;
+    
+    /* Backgrounds - Soft Cream */
+    --background: 36 33% 94%;
+    --foreground: 0 0% 15%;
+    
+    /* Cards - Soft Cream */
+    --card: 36 33% 94%;
+    --card-foreground: 0 0% 15%;
+    
+    /* Popover - Soft Cream */
+    --popover: 36 33% 94%;
+    --popover-foreground: 0 0% 15%;
+    
+    /* Muted */
+    --muted: 142 10% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Border & Input */
+    --border: 142 20% 88%;
+    --input: 142 20% 88%;
+    --ring: 142 50% 35%;
+    
+    --radius: 0.5rem;
+    
+    /* Custom tokens */
+    --gold: 43 90% 50%;
+    --gold-light: 43 85% 65%;
+    --gold-dark: 43 95% 40%;
+    --green-light: 142 40% 45%;
+    --green-dark: 142 60% 15%;
+    
+    /* Sidebar */
+    --sidebar-background: 142 50% 20%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 43 90% 50%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 142 40% 30%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 142 40% 25%;
+    --sidebar-ring: 43 90% 50%;
+  }
+
+  .dark {
+    --primary: 142 45% 45%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 142 30% 15%;
+    --secondary-foreground: 142 30% 90%;
+    
+    --accent: 43 85% 55%;
+    --accent-foreground: 0 0% 10%;
+    
+    --background: 142 30% 8%;
+    --foreground: 0 0% 95%;
+    
+    --card: 142 30% 12%;
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 142 30% 12%;
+    --popover-foreground: 0 0% 95%;
+    
+    --muted: 142 20% 18%;
+    --muted-foreground: 0 0% 65%;
+    
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 142 20% 20%;
+    --input: 142 20% 20%;
+    --ring: 43 85% 55%;
+    
+    --sidebar-background: 142 40% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 43 85% 55%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 142 30% 20%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 142 30% 15%;
+    --sidebar-ring: 43 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--green-light)) 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--gold-light)) 100%);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--green-light)) 100%);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90 font-semibold px-6 py-3 rounded-md transition-all duration-300 hover:shadow-lg;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* RTL Support for Arabic and other RTL languages */
+[dir="rtl"] {
+  /* Flip flex direction for navigation and layouts */
+  .flex-row {
+    flex-direction: row-reverse;
+  }
+  
+  /* Adjust text alignment */
+  .text-left {
+    text-align: right;
+  }
+  
+  .text-right {
+    text-align: left;
+  }
+  
+  /* Flip margins and paddings */
+  .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  
+  .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  
+  /* Flip icons that indicate direction */
+  .rtl-flip {
+    transform: scaleX(-1);
+  }
+}
+
+/* Multi-language font support */
+@font-face {
+  font-family: 'Noto Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosansarabic/v18/nwpxtLGrOAZMl5nJ_wfgRg3DrWFZWsnVBJ_sS6tlqHHFlhQ5l3sQWIHPqzCfyGyv.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosanssc/v36/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYxNbPzS.woff2') format('woff2');
+  unicode-range: U+4E00-9FFF, U+3400-4DBF;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosansjp/v52/-F6jfjtqLzI2JPCgQBnw7HFyzSD-AsregP8VFBEi75g.woff2') format('woff2');
+  unicode-range: U+3040-309F, U+30A0-30FF, U+4E00-9FFF;
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosanskr/v36/PbyxFmXiEBPT4ITbgNA5CgmOsn7uwpYcuH8y.woff2') format('woff2');
+  unicode-range: U+AC00-D7AF, U+1100-11FF, U+3130-318F;
+}
+
+@font-face {
+  font-family: 'Noto Sans Thai';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/notosansthai/v20/iJWnBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofNWcd1MKVQt_So_9CdU0pqpzF-QRvzzw.woff2') format('woff2');
+  unicode-range: U+0E00-0E7F;
+}
+
+/* Apply appropriate fonts based on language */
+[lang="ar"] body {
+  font-family: 'Noto Sans Arabic', 'Open Sans', sans-serif;
+}
+
+[lang="zh"] body {
+  font-family: 'Noto Sans SC', 'Open Sans', sans-serif;
+}
+
+[lang="ja"] body {
+  font-family: 'Noto Sans JP', 'Open Sans', sans-serif;
+}
+
+[lang="ko"] body {
+  font-family: 'Noto Sans KR', 'Open Sans', sans-serif;
+}
+
+[lang="th"] body {
+  font-family: 'Noto Sans Thai', 'Open Sans', sans-serif;
+}
