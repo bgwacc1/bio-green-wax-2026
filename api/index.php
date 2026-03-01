@@ -3040,16 +3040,8 @@ switch (true) {
         break;
 
     case $method === 'GET' && $uri === '/sitemap.xml':
-        checkDbConnection($conn);
-
         $baseUrl = 'https://biogreenwax.co.uk';
         $languages = ['en','zh','es','fr','ar','pt','ru','de','ja','sw','tr','vi','ko','th','it','pl'];
-
-        $noIndexPaths = [];
-        $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
-        while ($row = $stmt->fetch()) {
-            $noIndexPaths[] = $row['page_path'];
-        }
 
         $staticPages = [
             ['path' => '/', 'changefreq' => 'weekly', 'priority' => '1.0'],
@@ -3062,18 +3054,10 @@ switch (true) {
             ['path' => '/sectors', 'changefreq' => 'monthly', 'priority' => '0.8'],
         ];
 
-        $products = $conn->query("SELECT slug, created_at FROM products WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
-        $sectors = $conn->query("SELECT slug, created_at FROM sectors WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
-        $news = $conn->query("SELECT slug, published_at FROM news_articles WHERE is_published = 1 ORDER BY published_at DESC")->fetchAll();
-
         header('Content-Type: application/xml; charset=utf-8');
         header('Cache-Control: public, max-age=3600');
 
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . "\n";
-        $xml .= '        xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
-
-        $addUrl = function($path, $changefreq, $priority, $lastmod, $includeHreflang = true) use ($baseUrl, $languages, $noIndexPaths, &$xml) {
+        $addUrl = function($path, $changefreq, $priority, $lastmod, $includeHreflang = true) use ($baseUrl, $languages, &$noIndexPaths, &$xml) {
             if (in_array($path, $noIndexPaths)) return;
 
             $fullPath = $path === '/' ? '' : $path;
@@ -3096,6 +3080,30 @@ switch (true) {
             $xml .= "    <priority>{$priority}</priority>\n";
             $xml .= "  </url>\n";
         };
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . "\n";
+        $xml .= '        xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
+
+        $noIndexPaths = [];
+        $products = [];
+        $sectors = [];
+        $news = [];
+
+        try {
+            if ($conn) {
+                $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
+                while ($row = $stmt->fetch()) {
+                    $noIndexPaths[] = $row['page_path'];
+                }
+
+                $products = $conn->query("SELECT slug, created_at FROM products WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
+                $sectors = $conn->query("SELECT slug, created_at FROM sectors WHERE is_active = 1 ORDER BY display_order, name")->fetchAll();
+                $news = $conn->query("SELECT slug, published_at FROM news_articles WHERE is_published = 1 ORDER BY published_at DESC")->fetchAll();
+            }
+        } catch (Exception $e) {
+            error_log("sitemap.xml: DB query failed, using static pages only - " . $e->getMessage());
+        }
 
         foreach ($staticPages as $page) {
             $addUrl($page['path'], $page['changefreq'], $page['priority'], date('Y-m-d'));
@@ -3121,16 +3129,20 @@ switch (true) {
         exit;
 
     case $method === 'GET' && $uri === '/robots.txt':
-        checkDbConnection($conn);
-
         header('Content-Type: text/plain; charset=utf-8');
 
         $robotsTxt = "User-agent: *\n";
         $robotsTxt .= "Allow: /\n";
 
-        $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
-        while ($row = $stmt->fetch()) {
-            $robotsTxt .= "Disallow: " . $row['page_path'] . "\n";
+        try {
+            if ($conn) {
+                $stmt = $conn->query("SELECT page_path FROM seo_page_meta WHERE no_index = 1 AND is_active = 1");
+                while ($row = $stmt->fetch()) {
+                    $robotsTxt .= "Disallow: " . $row['page_path'] . "\n";
+                }
+            }
+        } catch (Exception $e) {
+            error_log("robots.txt: DB query failed, using defaults - " . $e->getMessage());
         }
 
         $robotsTxt .= "Disallow: /admin\n";
