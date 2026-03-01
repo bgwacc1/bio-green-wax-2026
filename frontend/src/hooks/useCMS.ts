@@ -83,6 +83,34 @@ export interface SiteContent {
   updated_at: string;
 }
 
+interface HomepageData {
+  hero_slides: HeroSlide[];
+  featured_products: Product[];
+  sectors: Sector[];
+  product_categories: ProductCategory[];
+  news_articles: NewsArticle[];
+  contact_info: ContactInfo[];
+}
+
+export const useHomepageData = (lang = 'en') => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: ["homepage-data", lang],
+    queryFn: async () => {
+      const data = await apiClient.get<HomepageData>(`/api/homepage-data?lang=${lang}`);
+      queryClient.setQueryData(["hero-slides", false, lang], data.hero_slides);
+      queryClient.setQueryData(["products", "featured", lang], data.featured_products);
+      queryClient.setQueryData(["sectors", true, lang], data.sectors);
+      queryClient.setQueryData(["product-categories", true, lang], data.product_categories);
+      queryClient.setQueryData(["news-articles", true, lang], data.news_articles);
+      queryClient.setQueryData(["contact-info"], data.contact_info);
+      return data;
+    },
+    staleTime: 3 * 60 * 1000,
+  });
+};
+
 // Hero Slides Hooks
 export const useHeroSlides = (adminView = false, lang = 'en') => {
   return useQuery({

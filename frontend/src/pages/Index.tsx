@@ -9,10 +9,13 @@ import {
   CTASection,
 } from "@/components/home";
 import { SEO, OrganizationSchema, LocalBusinessSchema } from "@/components/SEO";
-import { useSEOPageMeta } from "@/hooks/useCMS";
+import { useSEOPageMeta, useHomepageData } from "@/hooks/useCMS";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Index = () => {
   const { data: seoMeta } = useSEOPageMeta("/");
+  const { currentLanguage } = useLanguage();
+  useHomepageData(currentLanguage);
 
   return (
     <Layout>

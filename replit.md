@@ -14,10 +14,13 @@ The system employs a client-server architecture. The frontend is built with Reac
 *   **Ionos Compatibility:** The entire application is optimized for Ionos shared hosting, meaning the frontend compiles to static files, and the PHP backend leverages Apache's `mod_rewrite`.
 *   **Performance Optimization:**
     *   Route-based code splitting with React.lazy() - main bundle 116KB (was 1.9MB), admin/charts loaded on demand.
-    *   All images compressed with sharp to web-optimized sizes (uploads: 1.6MB from 51MB, static: 11MB from 68MB).
+    *   All images compressed to optimized JPGs (product PNGs: 6.9MB→1.9MB, hero fallbacks: 4.3MB→517KB, logo: 805KB→129KB).
     *   Images stored as static files in /uploads/ and /images/ instead of base64 in database.
     *   Lazy loading on all non-priority images with opacity fade-in transition.
     *   Vite manualChunks separates vendor, router, UI, query, and charts libraries.
+    *   **Combined homepage API endpoint** (`/homepage-data`) — single request returns hero slides, featured products, sectors, categories, news, and contact info; pre-populates React Query cache for all individual hooks.
+    *   **Global React Query caching** — staleTime: 2min, gcTime: 10min, refetchOnWindowFocus: false; prevents redundant refetches during navigation.
+    *   **HTTP cache headers** — public GET endpoints return `Cache-Control: public, max-age=120, stale-while-revalidate=300` for browser-level caching.
 *   **Database Management:** Development environments use PostgreSQL (via Replit), while production uses MySQL/MariaDB. A `synchronized_data` column on translatable content tables tracks translation status.
 *   **UI/UX:** Utilizes Tailwind CSS for utility-first styling and Shadcn UI for accessible, customizable components built on Radix UI.
 *   **API Design:** A RESTful API provides CRUD operations for various content types, authentication, health checks, and specialized endpoints for SEO, analytics, and translation.

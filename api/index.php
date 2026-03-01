@@ -310,6 +310,20 @@ if (preg_match('#/api(.*)$#', $uri, $matches)) {
 
 $uri = rtrim($uri, '/') ?: '/';
 
+$publicCacheEndpoints = [
+    '/hero-slides', '/products', '/product-categories', '/sectors',
+    '/certifications', '/news-articles', '/contact-info', '/about-us',
+    '/seo-page-meta/by-path', '/homepage-data'
+];
+if ($method === 'GET') {
+    foreach ($publicCacheEndpoints as $ep) {
+        if ($uri === $ep || strpos($uri, $ep) === 0) {
+            header('Cache-Control: public, max-age=120, stale-while-revalidate=300');
+            break;
+        }
+    }
+}
+
 switch (true) {
     case $method === 'GET' && preg_match('#^/images/([a-z_]+)/([^/]+)$#', $uri, $m):
         checkDbConnection($conn);
@@ -626,6 +640,67 @@ switch (true) {
         }
 
         jsonResponse(['success' => true]);
+        break;
+
+    case $method === 'GET' && $uri === '/homepage-data':
+        checkDbConnection($conn);
+        $lang = $_GET['lang'] ?? 'en';
+        header('Cache-Control: public, max-age=120, stale-while-revalidate=300');
+
+        $slides = $conn->query("SELECT * FROM hero_slides WHERE is_active = 1 ORDER BY display_order ASC")->fetchAll();
+        $slideFields = ['title', 'subtitle', 'cta_text'];
+        foreach ($slides as &$slide) {
+            $translations = getTranslatedFields($conn, 'hero_slides', $slide['id'], $lang, $slideFields);
+            $slide = mergeTranslations($slide, $translations, $slideFields);
+        }
+
+        $featuredProducts = $conn->query("SELECT * FROM products WHERE is_active = 1 AND is_featured = 1 ORDER BY priority_order ASC, display_order ASC")->fetchAll();
+        $productFields = ['name', 'description', 'full_description'];
+        foreach ($featuredProducts as &$product) {
+            $translations = getTranslatedFields($conn, 'products', $product['id'], $lang, $productFields);
+            $product = mergeTranslations($product, $translations, $productFields);
+            $product['specifications'] = json_decode($product['specifications'] ?? '[]', true) ?: [];
+            $product['applications'] = json_decode($product['applications'] ?? '[]', true) ?: [];
+            $product['packaging'] = json_decode($product['packaging'] ?? '[]', true) ?: [];
+            $product['categories'] = json_decode($product['categories'] ?? '[]', true) ?: [];
+        }
+
+        $sectors = $conn->query("SELECT * FROM sectors WHERE is_active = 1 ORDER BY display_order ASC")->fetchAll();
+        $sectorFields = ['name', 'description'];
+        foreach ($sectors as &$sector) {
+            $translations = getTranslatedFields($conn, 'sectors', $sector['id'], $lang, $sectorFields);
+            $sector = mergeTranslations($sector, $translations, $sectorFields);
+        }
+
+        $categories = $conn->query("SELECT * FROM product_categories WHERE is_active = 1 ORDER BY display_order ASC")->fetchAll();
+        $catFields = ['name', 'description'];
+        foreach ($categories as &$cat) {
+            $translations = getTranslatedFields($conn, 'product_categories', $cat['id'], $lang, $catFields);
+            $cat = mergeTranslations($cat, $translations, $catFields);
+        }
+
+        $news = $conn->query("SELECT * FROM news_articles WHERE is_published = 1 ORDER BY published_at DESC")->fetchAll();
+        $newsFields = ['title', 'excerpt', 'content'];
+        foreach ($news as &$article) {
+            $translations = getTranslatedFields($conn, 'news_articles', $article['id'], $lang, $newsFields);
+            $article = mergeTranslations($article, $translations, $newsFields);
+        }
+
+        $contactInfo = $conn->query("SELECT * FROM contact_info ORDER BY id ASC")->fetchAll();
+        $contactFields = ['value', 'label'];
+        foreach ($contactInfo as &$ci) {
+            $translations = getTranslatedFields($conn, 'contact_info', $ci['id'], $lang, $contactFields);
+            $ci = mergeTranslations($ci, $translations, $contactFields);
+        }
+
+        jsonResponse([
+            'hero_slides' => $slides,
+            'featured_products' => $featuredProducts,
+            'sectors' => $sectors,
+            'product_categories' => $categories,
+            'news_articles' => $news,
+            'contact_info' => $contactInfo,
+        ]);
         break;
 
     case $method === 'GET' && $uri === '/hero-slides':
