@@ -89,12 +89,22 @@ const HeroSection = ({ preloadedSlides }: HeroSectionProps) => {
                     isActive ? "animate-slide-up" : ""
                   )}
                 >
-                  <h1 
-                    className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-heading font-bold mb-2 sm:mb-3 md:mb-4 leading-tight text-white"
-                    style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
-                  >
-                    {slide.title}
-                  </h1>
+                  {isActive ? (
+                    <h1 
+                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-heading font-bold mb-2 sm:mb-3 md:mb-4 leading-tight text-white"
+                      style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+                    >
+                      {slide.title}
+                    </h1>
+                  ) : (
+                    <p 
+                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-heading font-bold mb-2 sm:mb-3 md:mb-4 leading-tight text-white"
+                      style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+                      aria-hidden="true"
+                    >
+                      {slide.title}
+                    </p>
+                  )}
                   {slide.subtitle && (
                     <p 
                       className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/90 mb-3 sm:mb-4 md:mb-6 line-clamp-2 sm:line-clamp-none"
