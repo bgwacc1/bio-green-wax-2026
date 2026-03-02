@@ -9,7 +9,7 @@ RewriteCond %{REQUEST_URI} ^/api/(.*)$
 RewriteRule ^api/(.*)$ api/index.php [QSA,L]
 
 # Bot/AI crawler pre-rendering - serve full HTML to AI bots
-RewriteCond %{HTTP_USER_AGENT} (GPTBot|ChatGPT-User|Google-Extended|CCBot|anthropic-ai|ClaudeBot|Claude-Web|Bytespider|Amazonbot|PerplexityBot|YouBot|Applebot-Extended|cohere-ai|FacebookBot|Meta-ExternalAgent|Diffbot|ImagesiftBot|Seekr) [NC]
+RewriteCond %{HTTP_USER_AGENT} (Googlebot|Google-Extended|Google-InspectionTool|Storebot-Google|GoogleOther|Bingbot|BingPreview|msnbot|Slurp|DuckDuckBot|Baiduspider|YandexBot|GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|YouBot|CCBot|cohere-ai|CohereBot|Google-Gemini|Bytespider|Amazonbot|Applebot|Applebot-Extended|facebookexternalhit|FacebookBot|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Meta-ExternalAgent|Meta-ExternalFetcher|SemrushBot|AhrefsBot|MJ12bot|DotBot|Diffbot|PetalBot|SeznamBot|DataForSeoBot|ImagesiftBot|Seekr|AI2Bot) [NC]
 RewriteCond %{REQUEST_URI} !^/api/
 RewriteCond %{REQUEST_URI} !^/assets/
 RewriteCond %{REQUEST_URI} !^/images/
@@ -46,6 +46,7 @@ RewriteRule ^ index.html [L]
     ExpiresByType image/jpeg "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
