@@ -1,0 +1,150 @@
+Here’s a comprehensive SEO audit report for your website
+👉 https://a77fa2a4-1383-4f82-8ac3-32a717e28987-00-2vzqbmqut1odw.riker.replit.dev/
+
+based on what can be analyzed from the homepage HTML source and general SEO best practices:
+
+📌 1. SEO‑Optimized Homepage Template (What Should Be There)
+
+A strong homepage for SEO should include the following in its <head> section:
+
+🔹 Required Elements (On‑Page SEO)
+Element	Purpose
+<title>	Main topic of the page; vital for rankings.
+<meta name="description">	Short summary shown in search results (max ~155‑160 chars).
+<meta name="robots" content="index,follow">	Tells bots to index and follow links.
+<h1>	Main heading with primary keyword.
+<h2>, <h3>	Subheadings for structure/content sections.
+<link rel="canonical">	Prevents duplicate content issues.
+<lang> attribute	Defines language for search engines.
+
+Example SEO‑ready head section
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bio Green Wax Ltd – Edible Oils & Industrial Wax Supplier</title>
+  <meta name="description" content="Supplier of RSPO MB/SG & EUDR-certified palm oils, olein, stearin and custom plant-based & paraffin wax blends for industries.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://biogreenwax.com/">
+</head>
+<body>
+<!-- page content -->
+
+This helps search engines understand and display your page in results.
+
+⚙️ 2. Technical SEO Evaluation
+
+Based on the current homepage HTML, here’s what’s present and what’s missing:
+
+✔ What Your Site Has
+
+✅ Visible HTML content with product listings and internal links — crawlable by bots.
+
+❌ What’s Missing / Needs Improvement
+
+Missing or Not Verified (requires manual verification or implementation):
+
+❌ Title tag (likely missing based on raw HTML).
+
+❌ Meta description tag.
+
+❌ robots.txt file — For controlling crawler access & sitemaps.
+
+❌ XML Sitemap (sitemap.xml) — To help bots discover pages automatically.
+
+❌ Structured data (schema markup) — Enhances rich results and indexing.
+
+❌ Mobile optimization (responsive design) — Needs testing.
+
+❌ HTTP security headers & Core Web Vitals metrics (speed, LCP, CLS).
+
+Technical SEO tools like Ahrefs Site Audit, SEOCheckr, or similar can analyze deeper issues such as crawl errors, broken links, or performance bottlenecks.
+
+✍️ 3. On‑Page SEO & Content Structure
+🧠 Content & Keywords
+
+Your homepage content shows products and categories clearly, which is good for bots to understand the niche (oils, waxes, palm derivatives).
+
+Suggestions:
+
+Include primary keywords in the title and meta description.
+
+Keep product category keywords naturally in headings (e.g., “Edible Oils”, “Plant‑Based Waxes”).
+
+Add alt text for any images (helps indexing & accessibility).
+
+🏷 Headings Hierarchy
+
+Your page appears to have content but may lack proper <h1>, <h2> tags distinct from just plain text. Proper heading structure improves SEO.
+
+🧭 4. Robots.txt & Sitemap
+
+These files are not visible from the source, which likely means they are not present.
+
+❓ Robots.txt
+
+A robots.txt file (e.g., https://biogreenwax.com/robots.txt) should:
+
+User-agent: *
+Disallow:
+
+Sitemap: https://biogreenwax.com/sitemap.xml
+
+This tells bots they can crawl all pages and where to find your sitemap.
+
+❓ Sitemap.xml
+
+An XML sitemap helps search engines discover all pages. Tools like SEOCheckr or Google Search Console generate this automatically.
+
+📶 5. Google Search Console & Indexing
+
+To track real indexing and performance:
+
+✔ Actions You Should Take
+
+Verify your site in Google Search Console — this tells you what pages are indexed and highlights crawl issues.
+
+Submit sitemap.xml via Search Console.
+
+Monitor crawl errors, keyword impressions, and indexing status.
+
+🔧 6. Performance & Core Web Vitals
+
+SEO isn’t just content — it includes user experience:
+
+Factors to Check
+
+Page Load Speed
+
+Mobile‑friendly layout
+
+Largest Contentful Paint (LCP)
+
+Cumulative Layout Shift (CLS)
+
+First Input Delay (FID)
+
+These are performance signals that influence search rankings. Tools like PageSpeed Insights or Google Search Console will help measure these metrics.
+
+📊 Summary Report (What’s Done vs Needed)
+SEO Component	Status	Next Step
+Crawlable Content	✅	Good
+Title Tags	❌	Add unique titles
+Meta Descriptions	❌	Create compelling descriptions
+Heading Tags	❌/Partial	Add structured headings
+Robots.txt	❌	Create & upload
+Sitemap.xml	❌	Generate & submit
+Structured Data	❌	Add schema markup
+Mobile Optimization	❓	Test responsiveness
+Page Speed	❓	Run performance tools
+Indexing Status	❓	Verify in Google Search Console
+🛠 Recommended Next Steps
+🚀 Quick Wins
+
+Add Title + Meta Description on all pages.
+
+Create and submit robots.txt and sitemap.xml.
+
+Verify site in Google Search Console and Bing Webmaster Tools.
+
+Add structured data (e.g., Organization, Product schema).
