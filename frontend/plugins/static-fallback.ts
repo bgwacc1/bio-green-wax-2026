@@ -104,37 +104,84 @@ async function generateFallback(lang: string): Promise<string> {
 
   let html = '';
 
-  html += `<header${dir}>
-  <nav aria-label="Main Navigation">
-    <a href="${prefix}/">Bio Green Wax Ltd</a>
-    <ul>
-      <li><a href="${prefix}/products">${nav.products}</a></li>
-      <li><a href="${prefix}/sectors">${nav.sectors}</a></li>
-      <li><a href="${prefix}/about">${nav.about}</a></li>
-      <li><a href="${prefix}/news">${nav.news}</a></li>
-      <li><a href="${prefix}/certifications">${nav.certifications}</a></li>
-      <li><a href="${prefix}/careers">${nav.careers}</a></li>
-      <li><a href="${prefix}/contact">${nav.contact}</a></li>
-    </ul>
-  </nav>
+  html += `<style>
+.sf-root,.sf-root *{margin:0;padding:0;box-sizing:border-box}
+.sf-root{font-family:'Open Sans',system-ui,-apple-system,sans-serif;color:#1a1a1a;line-height:1.6}
+.sf-hdr{background:#fff;border-bottom:1px solid #e5e7eb;padding:0 24px;position:sticky;top:0;z-index:50}
+.sf-hdr-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.sf-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#1a1a1a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px}
+.sf-logo img{height:40px;width:auto}
+.sf-nav{display:flex;gap:4px;list-style:none;flex-wrap:wrap}
+.sf-nav li a{text-decoration:none;color:#4b5563;font-size:14px;font-weight:500;padding:8px 12px;border-radius:6px;transition:background .2s,color .2s}
+.sf-nav li a:hover{background:#f0fdf4;color:#166534}
+.sf-hero{background:linear-gradient(135deg,#166534 0%,#15803d 40%,#22c55e 100%);color:#fff;padding:80px 24px;text-align:center}
+.sf-hero-inner{max-width:900px;margin:0 auto}
+.sf-hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(24px,4vw,42px);font-weight:800;margin-bottom:16px;line-height:1.2}
+.sf-hero p{font-size:clamp(14px,2vw,18px);opacity:.92;max-width:700px;margin:0 auto;line-height:1.7}
+.sf-main{max-width:1200px;margin:0 auto;padding:0 24px}
+.sf-section{padding:48px 0;border-bottom:1px solid #f3f4f6}
+.sf-section:last-child{border-bottom:none}
+.sf-section h2{font-family:'Montserrat',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:#166534;margin-bottom:24px}
+.sf-section h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.sf-section h3 a{color:#166534;text-decoration:none}
+.sf-section h3 a:hover{text-decoration:underline}
+.sf-section p{color:#4b5563;font-size:14px;margin-bottom:8px}
+.sf-section ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.sf-section li{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px}
+.sf-btn{display:inline-block;margin-top:16px;padding:10px 24px;background:#166534;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;font-size:14px}
+.sf-btn:hover{background:#15803d}
+.sf-contact ul{display:block}
+.sf-contact li{background:none;border:none;padding:4px 0}
+.sf-footer{background:#111827;color:#9ca3af;text-align:center;padding:32px 24px;font-size:13px}
+.sf-root[dir="rtl"] .sf-hdr-inner{flex-direction:row-reverse}
+.sf-root[dir="rtl"] .sf-nav{flex-direction:row-reverse}
+.sf-root[dir="rtl"] .sf-hero,.sf-root[dir="rtl"] .sf-main{direction:rtl;text-align:right}
+@media(max-width:768px){.sf-hdr-inner{flex-wrap:wrap;height:auto;padding:12px 0}.sf-nav{gap:2px}.sf-nav li a{padding:6px 8px;font-size:13px}.sf-hero{padding:48px 24px}.sf-section ul{grid-template-columns:1fr}}
+</style>
+<div class="sf-root"${dir}>
+<header class="sf-hdr">
+  <div class="sf-hdr-inner">
+    <a href="${prefix}/" class="sf-logo">
+      <img src="/logo.webp" alt="Bio Green Wax Ltd" width="40" height="40">
+      Bio Green Wax Ltd
+    </a>
+    <nav aria-label="Main Navigation">
+      <ul class="sf-nav">
+        <li><a href="${prefix}/products">${nav.products}</a></li>
+        <li><a href="${prefix}/sectors">${nav.sectors}</a></li>
+        <li><a href="${prefix}/about">${nav.about}</a></li>
+        <li><a href="${prefix}/news">${nav.news}</a></li>
+        <li><a href="${prefix}/certifications">${nav.certifications}</a></li>
+        <li><a href="${prefix}/careers">${nav.careers}</a></li>
+        <li><a href="${prefix}/contact">${nav.contact}</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
-<main${dir}>
-  <h1>${escapeHtml(labels.h1)}</h1>
-  <p>${escapeHtml(labels.intro)}</p>\n`;
+<section class="sf-hero">
+  <div class="sf-hero-inner">
+    <h1>${escapeHtml(labels.h1)}</h1>
+    <p>${escapeHtml(labels.intro)}</p>
+  </div>
+</section>
+<main class="sf-main">\n`;
 
   if (categories?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.productCategories)}</h2>
     <ul>\n`;
     for (const cat of categories) {
-      html += `      <li><a href="${prefix}/products?category=${escapeHtml(cat.slug || cat.id)}">${escapeHtml(cat.name)}</a>${cat.description ? ` — ${escapeHtml(String(cat.description).substring(0, 150))}` : ''}</li>\n`;
+      html += `      <li>
+        <h3><a href="${prefix}/products?category=${escapeHtml(cat.slug || cat.id)}">${escapeHtml(cat.name)}</a></h3>
+        ${cat.description ? `<p>${escapeHtml(String(cat.description).substring(0, 150))}</p>` : ''}
+      </li>\n`;
     }
     html += `    </ul>
   </section>\n`;
   }
 
   if (products?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.productRange)}</h2>
     <ul>\n`;
     for (const p of products) {
@@ -146,12 +193,12 @@ async function generateFallback(lang: string): Promise<string> {
       </li>\n`;
     }
     html += `    </ul>
-    <p><a href="${prefix}/products">${escapeHtml(labels.viewAll)}</a></p>
+    <a href="${prefix}/products" class="sf-btn">${escapeHtml(labels.viewAll)}</a>
   </section>\n`;
   }
 
   if (sectors?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.industries)}</h2>
     <ul>\n`;
     for (const s of sectors) {
@@ -163,12 +210,12 @@ async function generateFallback(lang: string): Promise<string> {
       </li>\n`;
     }
     html += `    </ul>
-    <p><a href="${prefix}/sectors">${escapeHtml(labels.explore)}</a></p>
+    <a href="${prefix}/sectors" class="sf-btn">${escapeHtml(labels.explore)}</a>
   </section>\n`;
   }
 
   if (aboutContent?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.aboutUs)}</h2>\n`;
     const sections = new Map<string, any[]>();
     for (const block of aboutContent) {
@@ -196,12 +243,12 @@ async function generateFallback(lang: string): Promise<string> {
       }
       html += `    </ul>\n`;
     }
-    html += `    <p><a href="${prefix}/about">${escapeHtml(labels.readMore)}</a></p>
+    html += `    <a href="${prefix}/about" class="sf-btn">${escapeHtml(labels.readMore)}</a>
   </section>\n`;
   }
 
   if (news?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.latestNews)}</h2>
     <ul>\n`;
     for (const article of news) {
@@ -214,12 +261,12 @@ async function generateFallback(lang: string): Promise<string> {
       </li>\n`;
     }
     html += `    </ul>
-    <p><a href="${prefix}/news">${escapeHtml(labels.latestNews)}</a></p>
+    <a href="${prefix}/news" class="sf-btn">${escapeHtml(labels.latestNews)}</a>
   </section>\n`;
   }
 
   if (certifications?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.certifications)}</h2>
     <ul>\n`;
     for (const cert of certifications) {
@@ -229,12 +276,12 @@ async function generateFallback(lang: string): Promise<string> {
       </li>\n`;
     }
     html += `    </ul>
-    <p><a href="${prefix}/certifications">${escapeHtml(labels.certifications)}</a></p>
+    <a href="${prefix}/certifications" class="sf-btn">${escapeHtml(labels.certifications)}</a>
   </section>\n`;
   }
 
   if (jobs?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section">
     <h2>${escapeHtml(labels.careers)}</h2>
     <ul>\n`;
     for (const job of jobs) {
@@ -246,12 +293,12 @@ async function generateFallback(lang: string): Promise<string> {
       </li>\n`;
     }
     html += `    </ul>
-    <p><a href="${prefix}/careers">${escapeHtml(labels.viewOpenings)}</a></p>
+    <a href="${prefix}/careers" class="sf-btn">${escapeHtml(labels.viewOpenings)}</a>
   </section>\n`;
   }
 
   if (contactInfo?.length > 0) {
-    html += `  <section>
+    html += `  <section class="sf-section sf-contact">
     <h2>${escapeHtml(labels.contactUs)}</h2>
     <ul>\n`;
     for (const c of contactInfo) {
@@ -259,7 +306,7 @@ async function generateFallback(lang: string): Promise<string> {
     }
     html += `    </ul>
     <p>Email: <a href="mailto:sales@biogreenwax.com">sales@biogreenwax.com</a> | Phone: +44 20 7101 3847</p>
-    <p><a href="${prefix}/contact">${escapeHtml(labels.getInTouch)}</a></p>
+    <a href="${prefix}/contact" class="sf-btn">${escapeHtml(labels.getInTouch)}</a>
   </section>\n`;
   }
 
@@ -348,9 +395,10 @@ async function generateFallback(lang: string): Promise<string> {
   html += `\n<script type="application/ld+json">${JSON.stringify(graphWrapper)}</script>\n`;
 
   html += `</main>
-<footer${dir}>
+<footer class="sf-footer">
   <p>&copy; ${new Date().getFullYear()} Bio Green Wax Ltd. All rights reserved.</p>
-</footer>`;
+</footer>
+</div>`;
 
   return html;
 }
