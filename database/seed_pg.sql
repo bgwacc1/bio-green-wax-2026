@@ -1276,7 +1276,7 @@ INSERT INTO "hero_slides" ("id", "title", "subtitle", "cta_text", "cta_link", "i
 ('b1a3a562-6f7a-47b5-9481-c6e3dc3bd104', 'From Farm to Global Trade', 'Vibrant Rapeseed, Soy, Sunflower fields, and RSPO-certified Palm plantations fueling our supply chain.', 'About Us', '/about', '/uploads/hero_slides/b1a3a562-6f7a-47b5-9481-c6e3dc3bd104.jpg', 5, 1, 0, '2026-02-09 08:38:50'),
 ('slide-001', 'Premium edible oils from Nature''s Finest', 'Soy, Palm, Rapeseed, Sunflower, Olive, and Coconut oils ready for B2B worldwide.', 'Explore Our Oils', '/products?category=edible-oils', '/uploads/hero_slides/slide-001.jpg', 1, 1, 0, '2026-02-05 21:03:49'),
 ('slide-002', 'Industrial Waxes for Every Application', 'High-performance waxes for candle making, cosmetics, and more', 'View Wax Range', '/products?category=industrial-waxes', '/uploads/hero_slides/slide-002.jpg', 2, 1, 0, '2026-02-05 21:03:49'),
-('slide-003', 'Your Trusted Partner for Industrial Needs', 'Decades of expertise in natural oils and industrial waxes', 'About Us', '/about', '/images/hero/hero-3.png', 3, 1, 1, '2026-02-05 21:03:49');
+('slide-003', 'Your Trusted Partner for Industrial Needs', 'Decades of expertise in natural oils and industrial waxes', 'About Us', '/about', '/images/hero/hero-3.webp', 3, 1, 1, '2026-02-05 21:03:49');
 
 --
 -- Dumping data for table "hero_slides_ar"
