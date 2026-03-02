@@ -951,11 +951,24 @@ async function renderPage(url: string): Promise<string | null> {
   return null;
 }
 
+export function invalidateBotCache(): void {
+  cache.clear();
+}
+
 export function botPrerender(): Plugin {
   return {
     name: 'bot-prerender',
     configureServer(server) {
       server.middlewares.use(async (req: IncomingMessage, res: ServerResponse, next: Connect.NextFunction) => {
+        if (req.url === '/__invalidate-cache' && req.method === 'POST') {
+          const { invalidateFallbackCache } = await import('./static-fallback');
+          cache.clear();
+          invalidateFallbackCache();
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ success: true, message: 'Bot and fallback caches cleared' }));
+          return;
+        }
+
         const userAgent = req.headers['user-agent'] || '';
         const url = req.url || '/';
 
