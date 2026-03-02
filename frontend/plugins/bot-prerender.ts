@@ -2,17 +2,31 @@ import type { Plugin, Connect } from 'vite';
 import type { IncomingMessage, ServerResponse } from 'http';
 
 const BOT_USER_AGENTS = [
-  'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider',
-  'yandexbot', 'sogou', 'facebookexternalhit', 'twitterbot',
-  'linkedinbot', 'whatsapp', 'telegrambot', 'applebot',
+  'googlebot', 'google-extended', 'google-inspectiontool', 'storebot-google',
+  'adsbot-google', 'mediapartners-google', 'feedfetcher-google',
+  'bingbot', 'bingpreview', 'msnbot', 'adidxbot',
+  'slurp', 'duckduckbot', 'baiduspider', 'yandexbot', 'sogou',
+  'facebookexternalhit', 'facebot', 'twitterbot', 'linkedinbot',
+  'whatsapp', 'telegrambot', 'applebot', 'pinterestbot',
+  'slackbot', 'slack-imgproxy', 'discordbot', 'skypeuripreview',
+  'redditbot', 'snapchat', 'vkshare', 'tumblr',
   'semrushbot', 'ahrefsbot', 'mj12bot', 'dotbot',
-  'rogerbot', 'screaming frog', 'gtmetrix', 'pingdom',
+  'rogerbot', 'screaming frog', 'seositecheckup', 'seobility',
+  'serpstatbot', 'zoominfobot', 'dataforseobot',
+  'gtmetrix', 'pingdom', 'uptimerobot', 'statuscake',
   'lighthouse', 'chrome-lighthouse', 'pagespeed',
-  'seositecheckup', 'seobility', 'petalbot', 'bytespider',
-  'gptbot', 'claudebot', 'anthropic', 'ccbot',
+  'w3c_validator', 'w3c-checklink', 'jigsaw',
+  'petalbot', 'bytespider', 'yisou', 'qihoobot',
+  'gptbot', 'chatgpt', 'chatgpt-user', 'oai-searchbot',
+  'claudebot', 'anthropic-ai', 'anthropic',
+  'ccbot', 'cohere-ai', 'coherebot',
+  'perplexitybot', 'youbot', 'google-gemini',
+  'meta-externalagent', 'meta-externalfetcher',
+  'amazonbot', 'ai2bot', 'diffbot', 'friendly-spider',
   'seznambot', 'ia_archiver', 'archive.org_bot',
   'sitechecker', 'siteauditbot', 'headlesschrome',
-  'chatgpt', 'chatgpt-user', 'oai-searchbot'
+  'wget', 'curl', 'python-requests', 'python-urllib', 'httpx',
+  'go-http-client', 'java', 'axios', 'node-fetch', 'undici'
 ];
 
 const SUPPORTED_LANGUAGES = ['zh', 'es', 'fr', 'ar', 'pt', 'ru', 'de', 'ja', 'sw', 'tr', 'vi', 'ko', 'th', 'it', 'pl'];
