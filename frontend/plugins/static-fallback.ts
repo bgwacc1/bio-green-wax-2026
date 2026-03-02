@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite';
 
 const API_BASE = process.env.BOT_PRERENDER_API_BASE || 'http://localhost:8080';
-const REFRESH_INTERVAL = 5 * 60 * 1000;
+const REFRESH_INTERVAL = 60 * 60 * 1000;
 const PLACEHOLDER = '<!--STATIC_FALLBACK-->';
 
 const SUPPORTED_LANGUAGES = ['en', 'zh', 'es', 'fr', 'ar', 'pt', 'ru', 'de', 'ja', 'sw', 'tr', 'vi', 'ko', 'th', 'it', 'pl'];
