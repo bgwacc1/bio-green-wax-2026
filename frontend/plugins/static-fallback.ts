@@ -263,6 +263,90 @@ async function generateFallback(lang: string): Promise<string> {
   </section>\n`;
   }
 
+  const baseUrl = 'https://biogreenwax.com';
+  const pageUrl = lang === 'en' ? baseUrl : `${baseUrl}/${lang}`;
+
+  const orgSchema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Bio Green Wax Ltd',
+    url: baseUrl,
+    logo: `${baseUrl}/logo.png`,
+    description: labels.intro,
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'GB'
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+44-20-7101-3847',
+      email: 'sales@biogreenwax.com',
+      contactType: 'sales'
+    },
+    sameAs: []
+  };
+
+  const websiteSchema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Bio Green Wax Ltd',
+    url: baseUrl,
+    inLanguage: lang,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${baseUrl}/products?search={search_term_string}`,
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
+  const breadcrumbSchema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: pageUrl
+      }
+    ]
+  };
+
+  const productSchemas: any[] = [];
+  if (products?.length > 0) {
+    for (const p of products.slice(0, 10)) {
+      productSchemas.push({
+        '@type': 'Product',
+        name: p.name,
+        description: (p.short_description || p.description || '').substring(0, 300),
+        url: `${pageUrl}/products/${p.slug || p.id}`,
+        brand: { '@type': 'Brand', name: 'Bio Green Wax Ltd' },
+        manufacturer: { '@type': 'Organization', name: 'Bio Green Wax Ltd' }
+      });
+    }
+  }
+
+  const articleSchemas: any[] = [];
+  if (news?.length > 0) {
+    for (const article of news.slice(0, 5)) {
+      articleSchemas.push({
+        '@type': 'Article',
+        headline: article.title,
+        url: `${pageUrl}/news/${article.slug || article.id}`,
+        ...(article.published_at ? { datePublished: article.published_at } : {}),
+        description: (article.excerpt || '').substring(0, 200),
+        publisher: { '@type': 'Organization', name: 'Bio Green Wax Ltd' }
+      });
+    }
+  }
+
+  const graphWrapper = {
+    '@context': 'https://schema.org',
+    '@graph': [orgSchema, websiteSchema, breadcrumbSchema, ...productSchemas, ...articleSchemas].map(({ '@context': _, ...rest }) => rest)
+  };
+
+  html += `\n<script type="application/ld+json">${JSON.stringify(graphWrapper)}</script>\n`;
+
   html += `</main>
 <footer${dir}>
   <p>&copy; ${new Date().getFullYear()} Bio Green Wax Ltd. All rights reserved.</p>
