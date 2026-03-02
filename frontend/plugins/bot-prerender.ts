@@ -11,7 +11,8 @@ const BOT_USER_AGENTS = [
   'seositecheckup', 'seobility', 'petalbot', 'bytespider',
   'gptbot', 'claudebot', 'anthropic', 'ccbot',
   'seznambot', 'ia_archiver', 'archive.org_bot',
-  'sitechecker', 'siteauditbot', 'headlesschrome'
+  'sitechecker', 'siteauditbot', 'headlesschrome',
+  'chatgpt', 'chatgpt-user', 'oai-searchbot'
 ];
 
 const SUPPORTED_LANGUAGES = ['zh', 'es', 'fr', 'ar', 'pt', 'ru', 'de', 'ja', 'sw', 'tr', 'vi', 'ko', 'th', 'it', 'pl'];
