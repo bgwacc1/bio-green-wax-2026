@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useContactInfo, useProductCategories, useSectors } from "@/hooks/useCMS";
 import { useLanguage } from "@/i18n";

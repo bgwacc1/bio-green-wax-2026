@@ -22,7 +22,7 @@ interface SEOProps {
 
 const SITE_NAME = 'Bio Green Wax Ltd';
 const DEFAULT_DESCRIPTION = 'Bio Green Wax Ltd is a leading UK supplier of premium edible oils, plant-based waxes, and industrial petrochemical waxes. Quality products for food, cosmetics, and manufacturing industries.';
-const DEFAULT_IMAGE = '/og-image.png';
+const DEFAULT_IMAGE = '/og-image.webp';
 const SITE_URL = 'https://biogreenwax.com';
 
 export const SEO = ({
@@ -102,7 +102,7 @@ export const OrganizationSchema = ({
   name = SITE_NAME,
   description = DEFAULT_DESCRIPTION,
   url = SITE_URL,
-  logo = `${SITE_URL}/logo.png`,
+  logo = `${SITE_URL}/logo.webp`,
   email = 'sales@biogreenwax.com',
   phone = '+44 20 7101 3847',
   address = {
@@ -228,7 +228,7 @@ export const ArticleSchema = ({
       name: SITE_NAME,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/logo.webp`,
       },
     },
     mainEntityOfPage: {

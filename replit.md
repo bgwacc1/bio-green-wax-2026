@@ -14,7 +14,8 @@ The system employs a client-server architecture. The frontend is built with Reac
 *   **Ionos Compatibility:** The entire application is optimized for Ionos shared hosting, meaning the frontend compiles to static files, and the PHP backend leverages Apache's `mod_rewrite`.
 *   **Performance Optimization:**
     *   Route-based code splitting with React.lazy() - main bundle 116KB (was 1.9MB), admin/charts loaded on demand.
-    *   All images compressed to optimized JPGs (product PNGs: 6.9MB→1.9MB, hero fallbacks: 4.3MB→517KB, logo: 805KB→129KB).
+    *   All content images converted to WebP format (sectors, categories, hero, logo, og-image: 4.9MB→1.2MB, 74% reduction). Favicons remain PNG for browser compatibility.
+    *   Product images compressed to optimized JPGs (6.9MB→1.9MB).
     *   Images stored as static files in /uploads/ and /images/ instead of base64 in database.
     *   Lazy loading on all non-priority images with opacity fade-in transition.
     *   Vite manualChunks separates vendor, router, UI, query, and charts libraries.

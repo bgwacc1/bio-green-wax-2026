@@ -271,7 +271,7 @@ async function generateFallback(lang: string): Promise<string> {
     '@type': 'Organization',
     name: 'Bio Green Wax Ltd',
     url: baseUrl,
-    logo: `${baseUrl}/logo.png`,
+    logo: `${baseUrl}/logo.webp`,
     description: labels.intro,
     address: {
       '@type': 'PostalAddress',

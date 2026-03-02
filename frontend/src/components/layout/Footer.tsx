@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.webp";
 import OptimizedImage from "@/components/OptimizedImage";
 import { useContactInfo, useProductCategories, useSectors } from "@/hooks/useCMS";
 import { useLanguage } from "@/i18n/LanguageContext";

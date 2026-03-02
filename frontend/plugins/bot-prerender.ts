@@ -93,7 +93,7 @@ function buildOrganizationSchema(): object {
     "@type": "Organization",
     "name": "Bio Green Wax Ltd",
     "url": SITE_URL,
-    "logo": `${SITE_URL}/images/logo.jpg`,
+    "logo": `${SITE_URL}/logo.webp`,
     "description": "Leading UK supplier of premium edible oils, plant-based waxes, and industrial waxes.",
     "email": "sales@biogreenwax.com",
     "telephone": "+44 20 7101 3847",
@@ -192,7 +192,7 @@ function buildArticleSchema(article: any): object {
     "publisher": {
       "@type": "Organization",
       "name": "Bio Green Wax Ltd",
-      "logo": { "@type": "ImageObject", "url": `${SITE_URL}/images/logo.jpg` }
+      "logo": { "@type": "ImageObject", "url": `${SITE_URL}/logo.webp` }
     }
   };
 }
@@ -379,7 +379,7 @@ async function renderHomepage(lang: string): Promise<string> {
     canonicalUrl: SITE_URL,
     ogTitle: seo?.og_title,
     ogDescription: seo?.og_description,
-    ogImage: seo?.og_image || `${SITE_URL}/og-image.png`,
+    ogImage: seo?.og_image || `${SITE_URL}/og-image.webp`,
     lang, h1, bodyContent, schemas,
     contactInfo: homepage?.contact_info
   });

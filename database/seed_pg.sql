@@ -5180,25 +5180,25 @@ High-stability, neutral flavor solutions ensuring consistent texture, extended s
 
 Pharma-grade vegetable waxes including Beeswax (BP/Ph.Eur), Carnauba wax, Candelilla wax, Rice bran wax, Sunflower wax, Rapeseed wax, Palm wax, Castor wax, Soy wax, Olive wax, and Hydrogenated vegetable oils for ointments, creams, and suppositories.
 
-High-purity, pharmacopoeia-compliant solutions ensuring stability, smooth texture, and consistent drug release in topical and oral formulations.', 'Pill', NULL, '/images/sectors/pharmaceuticals.png', 0, 1, 1, '2026-02-05 21:03:49'),
+High-purity, pharmacopoeia-compliant solutions ensuring stability, smooth texture, and consistent drug release in topical and oral formulations.', 'Pill', NULL, '/images/sectors/pharmaceuticals.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-005', 'Textiles & Leather', 'textiles', 'High-performance vegetable waxes including Carnauba wax, Candelilla wax, Rice bran wax, Sunflower wax, Rapeseed wax, Palm wax, Beeswax, Soy wax, plus paraffin waxes and emulsions for fabric finishing, leather treatment, and waterproofing.
 
-Superior lubrication, water repellency, and abrasion resistance for improved sewability, tear strength, and processing efficiency in textile manufacturing and leather processing.', 'Shirt', NULL, '/images/sectors/textiles-leather.png', 0, 1, 1, '2026-02-05 21:03:49'),
+Superior lubrication, water repellency, and abrasion resistance for improved sewability, tear strength, and processing efficiency in textile manufacturing and leather processing.', 'Shirt', NULL, '/images/sectors/textiles-leather.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-006', 'Rubber & Plastics', 'rubber-plastics', 'Fully refined paraffin waxes, microcrystalline waxes, slack wax, and PE waxes optimized for tire production, plastic processing, and rubber compounding.
 
-Superior lubricants, release agents, and dispersion aids ensuring smooth extrusion, injection molding, calendering, and demolding with excellent surface finish and processing efficiency.', 'Factory', NULL, '/images/sectors/rubber-plastics.png', 0, 1, 1, '2026-02-05 21:03:49'),
+Superior lubricants, release agents, and dispersion aids ensuring smooth extrusion, injection molding, calendering, and demolding with excellent surface finish and processing efficiency.', 'Factory', NULL, '/images/sectors/rubber-plastics.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-007', 'Packaging', 'packaging', 'Fully refined paraffin waxes, microcrystalline waxes, slack wax, PE waxes, plus natural carnauba wax and beeswax for paper coating, boxboard lamination, and flexible packaging production.
 
-Superior waterproofing, grease resistance, and release properties ensuring durable moisture barriers, food-safe coatings, and efficient heat-seal performance across corrugated, folding cartons, and flexible films.', 'Package', NULL, '/images/sectors/packaging.png', 0, 1, 1, '2026-02-05 21:03:49'),
+Superior waterproofing, grease resistance, and release properties ensuring durable moisture barriers, food-safe coatings, and efficient heat-seal performance across corrugated, folding cartons, and flexible films.', 'Package', NULL, '/images/sectors/packaging.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-008', 'Adhesives', 'adhesives', 'Fully refined paraffin waxes, microcrystalline waxes, slack wax, PE waxes, carnauba wax, and beeswax as high-performance additives for coatings, inks, laminates, and emulsions.
 
-Enhance scratch resistance, moisture barrier, anti-block, COF reduction, and release properties for superior corrugated board, paperboard, and flexible packaging performance.', 'Layers', NULL, '/images/sectors/adhesives.png', 0, 1, 1, '2026-02-05 21:03:49'),
+Enhance scratch resistance, moisture barrier, anti-block, COF reduction, and release properties for superior corrugated board, paperboard, and flexible packaging performance.', 'Layers', NULL, '/images/sectors/adhesives.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-009', 'Polishes & Coatings', 'polishes-coatings', 'Fully refined paraffin waxes, microcrystalline waxes, carnauba wax, and beeswax for high-gloss floor polishes, furniture care, automotive coatings, and industrial surface protection.
 
-Exceptional abrasion resistance, buffability, and shine delivering long-lasting protection and professional finish across wood, metal, leather, and composite surfaces.', 'Sparkle', NULL, '/images/sectors/polishes-coatings.png', 0, 1, 1, '2026-02-05 21:03:49'),
+Exceptional abrasion resistance, buffability, and shine delivering long-lasting protection and professional finish across wood, metal, leather, and composite surfaces.', 'Sparkle', NULL, '/images/sectors/polishes-coatings.webp', 0, 1, 1, '2026-02-05 21:03:49'),
 ('sec-010', 'Paper & Printing', 'paper-printing', 'Fully refined paraffin waxes, microcrystalline waxes, carnauba wax, beeswax, and synthetic waxes for paper coating, ink rubbing resistance, and release applications.
 
-Superior moisture barrier, anti-stick properties, and print enhancement ensuring high-quality surface protection, excellent ink adhesion, and efficient processing for packaging papers and specialty printing.', 'FileText', NULL, '/images/sectors/paper-printing.png', 0, 1, 1, '2026-02-05 21:03:49');
+Superior moisture barrier, anti-stick properties, and print enhancement ensuring high-quality surface protection, excellent ink adhesion, and efficient processing for packaging papers and specialty printing.', 'FileText', NULL, '/images/sectors/paper-printing.webp', 0, 1, 1, '2026-02-05 21:03:49');
 
 --
 -- Dumping data for table "sectors_ar"
