@@ -105,7 +105,10 @@ function logBotVisit($conn, $botName, $userAgent, $pagePath, $pageType, $lang, $
         $countryCode = '';
         $city = '';
 
-        $stmt = $conn->prepare("INSERT INTO bot_visits (bot_name, bot_user_agent, ip_address, country, country_code, city, page_path, page_type, language, domain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $uaCol = 'user_agent';
+        try { $conn->query("SELECT bot_user_agent FROM bot_visits LIMIT 0"); $uaCol = 'bot_user_agent'; } catch (Exception $e) {}
+
+        $stmt = $conn->prepare("INSERT INTO bot_visits (bot_name, {$uaCol}, ip_address, country, country_code, city, page_path, page_type, language, domain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$botName, substr($userAgent, 0, 500), $ipAddress, $country, $countryCode, $city, $pagePath, $pageType, $lang, $domain]);
 
         if ($ipAddress && $ipAddress !== '127.0.0.1' && $ipAddress !== '::1') {

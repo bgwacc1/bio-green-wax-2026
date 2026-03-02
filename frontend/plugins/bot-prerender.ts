@@ -46,6 +46,71 @@ function isBot(userAgent: string): boolean {
   return BOT_USER_AGENTS.some(bot => ua.includes(bot));
 }
 
+const BOT_NAME_MAP: [string, string][] = [
+  ['gptbot', 'GPTBot'], ['chatgpt-user', 'ChatGPT'], ['chatgpt', 'ChatGPT'],
+  ['oai-searchbot', 'OAI-SearchBot'],
+  ['claudebot', 'ClaudeBot'], ['claude-web', 'Claude-Web'], ['anthropic-ai', 'Anthropic'],
+  ['perplexitybot', 'PerplexityBot'], ['youbot', 'YouBot'],
+  ['ccbot', 'CCBot'], ['cohere-ai', 'Cohere'],
+  ['googlebot', 'Googlebot'], ['google-extended', 'Google-Extended'],
+  ['google-inspectiontool', 'Google-InspectionTool'], ['google-gemini', 'Google-Gemini'],
+  ['bingbot', 'Bingbot'], ['bingpreview', 'BingPreview'],
+  ['baiduspider', 'Baiduspider'], ['yandexbot', 'YandexBot'],
+  ['duckduckbot', 'DuckDuckBot'], ['slurp', 'Yahoo Slurp'],
+  ['facebookexternalhit', 'Facebook'], ['twitterbot', 'Twitterbot'],
+  ['linkedinbot', 'LinkedInBot'], ['whatsapp', 'WhatsApp'],
+  ['applebot', 'Applebot'], ['telegrambot', 'TelegramBot'],
+  ['amazonbot', 'Amazonbot'], ['bytespider', 'Bytespider'],
+  ['semrushbot', 'SemrushBot'], ['ahrefsbot', 'AhrefsBot'],
+  ['meta-externalagent', 'Meta'], ['meta-externalfetcher', 'Meta'],
+  ['seznambot', 'SeznamBot'], ['petalbot', 'PetalBot'],
+  ['diffbot', 'Diffbot'], ['ai2bot', 'AI2Bot'],
+];
+
+function detectBotName(userAgent: string): string {
+  const ua = userAgent.toLowerCase();
+  for (const [pattern, name] of BOT_NAME_MAP) {
+    if (ua.includes(pattern)) return name;
+  }
+  return 'Unknown Bot';
+}
+
+function determinePageType(path: string): string {
+  if (path === '/' || path === '') return 'home';
+  if (path.match(/^\/products\/[^/]+$/)) return 'product_detail';
+  if (path.match(/^\/sectors\/[^/]+$/)) return 'sector_detail';
+  if (path.match(/^\/news\/[^/]+$/)) return 'news_detail';
+  if (path.startsWith('/products')) return 'products';
+  if (path.startsWith('/sectors')) return 'sectors';
+  if (path.startsWith('/about')) return 'about';
+  if (path.startsWith('/news')) return 'news';
+  if (path.startsWith('/certifications')) return 'certifications';
+  if (path.startsWith('/contact')) return 'contact';
+  if (path.startsWith('/careers')) return 'careers';
+  return 'other';
+}
+
+function logBotVisit(userAgent: string, url: string, ip: string): void {
+  const { lang, path } = parsePath(url);
+  const botName = detectBotName(userAgent);
+  const pageType = determinePageType(path);
+
+  fetch(`${API_BASE}/analytics/bots/log`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      bot_name: botName,
+      user_agent: userAgent,
+      ip_address: ip,
+      page_path: path,
+      page_type: pageType,
+      language: lang,
+      domain: 'dev',
+    }),
+    signal: AbortSignal.timeout(5000),
+  }).catch(() => {});
+}
+
 function isPageRequest(url: string): boolean {
   if (url.startsWith('/api') || url.startsWith('/@') || url.startsWith('/src') ||
       url.startsWith('/node_modules') || url.startsWith('/__') ||
@@ -975,6 +1040,9 @@ export function botPrerender(): Plugin {
         if (!isBot(userAgent) || !isPageRequest(url)) {
           return next();
         }
+
+        const clientIp = (req.headers['x-forwarded-for'] as string || req.socket?.remoteAddress || '').split(',')[0].trim();
+        logBotVisit(userAgent, url, clientIp);
 
         const cacheKey = url;
         const cached = cache.get(cacheKey);

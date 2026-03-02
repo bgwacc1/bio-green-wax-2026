@@ -2107,6 +2107,49 @@ switch (true) {
         jsonResponse($stmt->fetchAll());
         break;
 
+    case $method === 'POST' && $uri === '/analytics/bots/log':
+        checkDbConnection($conn);
+        $input = getInput();
+
+        $botName = $input['bot_name'] ?? 'Unknown Bot';
+        $botUserAgent = substr($input['user_agent'] ?? '', 0, 500);
+        $ipAddress = $input['ip_address'] ?? ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_X_REAL_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '');
+        if (strpos($ipAddress, ',') !== false) {
+            $ipAddress = trim(explode(',', $ipAddress)[0]);
+        }
+        $pagePath = $input['page_path'] ?? '/';
+        $pageType = $input['page_type'] ?? 'unknown';
+        $language = $input['language'] ?? 'en';
+        $domain = $input['domain'] ?? '';
+
+        $uaColumn = 'user_agent';
+        try {
+            $conn->query("SELECT bot_user_agent FROM bot_visits LIMIT 0");
+            $uaColumn = 'bot_user_agent';
+        } catch (Exception $e) {}
+
+        $stmt = $conn->prepare("INSERT INTO bot_visits (bot_name, {$uaColumn}, ip_address, country, country_code, city, page_path, page_type, language, domain) VALUES (?, ?, ?, '', '', '', ?, ?, ?, ?)");
+        $stmt->execute([$botName, $botUserAgent, $ipAddress, $pagePath, $pageType, $language, $domain]);
+        $lastId = $conn->lastInsertId();
+
+        if ($ipAddress && $ipAddress !== '127.0.0.1' && $ipAddress !== '::1') {
+            try {
+                $geoUrl = "http://ip-api.com/json/{$ipAddress}?fields=status,country,countryCode,city";
+                $geoContext = stream_context_create(['http' => ['timeout' => 1]]);
+                $geoData = @file_get_contents($geoUrl, false, $geoContext);
+                if ($geoData) {
+                    $geo = json_decode($geoData, true);
+                    if ($geo && ($geo['status'] ?? '') === 'success') {
+                        $stmt = $conn->prepare("UPDATE bot_visits SET country = ?, country_code = ?, city = ? WHERE id = ?");
+                        $stmt->execute([$geo['country'] ?? '', $geo['countryCode'] ?? '', $geo['city'] ?? '', $lastId]);
+                    }
+                }
+            } catch (Exception $e) {}
+        }
+
+        jsonResponse(['success' => true, 'id' => $lastId]);
+        break;
+
     // ============ BOT ANALYTICS ============
     case $method === 'GET' && $uri === '/analytics/bots/summary':
         checkDbConnection($conn);
