@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { botPrerender } from "./plugins/bot-prerender";
 import { staticFallback } from "./plugins/static-fallback";
+import { criticalCss } from "./plugins/critical-css";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -48,7 +49,7 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
-  plugins: [botPrerender(), staticFallback(), react()],
+  plugins: [botPrerender(), staticFallback(), react(), criticalCss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
